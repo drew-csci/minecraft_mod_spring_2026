@@ -9,15 +9,16 @@ A Minecraft Spigot/Paper plugin that provides an in-game GUI for customizing wor
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
-2. [Project Generation](#project-generation)
-3. [Building the Plugin](#building-the-plugin)
-4. [Server Setup](#server-setup)
-5. [Installation](#installation)
-6. [Testing the Plugin](#testing-the-plugin)
-7. [In-Game Usage](#in-game-usage)
-8. [Menu Reference](#menu-reference)
-9. [Project Structure](#project-structure)
-10. [Troubleshooting](#troubleshooting)
+2. [IDE Setup (VS Code)](#ide-setup-vs-code)
+3. [Project Generation](#project-generation)
+4. [Building the Plugin](#building-the-plugin)
+5. [Server Setup](#server-setup)
+6. [Installation](#installation)
+7. [Testing the Plugin](#testing-the-plugin)
+8. [In-Game Usage](#in-game-usage)
+9. [Menu Reference](#menu-reference)
+10. [Project Structure](#project-structure)
+11. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -94,6 +95,88 @@ You need a Spigot-compatible server to run the plugin. Paper is recommended for 
 1. Go to [papermc.io/downloads](https://papermc.io/downloads/paper)
 2. Select Minecraft version 1.20.4 (or your preferred 1.20+ version)
 3. Download the JAR file
+
+---
+
+## IDE Setup (VS Code)
+
+VS Code works well for Java/Minecraft plugin development. This section walks you through configuring it for this project.
+
+### Step 1: Install the Extension Pack for Java
+
+This single install bundles everything you need — language support, debugging, testing, Maven integration, and project management.
+
+1. Open VS Code
+2. Go to the Extensions sidebar (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+3. Search for **"Extension Pack for Java"** by Microsoft (extension ID: `vscjava.vscode-java-pack`)
+4. Click **Install**
+
+The pack includes:
+- **Language Support for Java** — IntelliSense, code navigation, refactoring
+- **Debugger for Java** — Breakpoints, step-through debugging
+- **Maven for Java** — Sidebar controls for `clean`, `package`, etc.
+- **Test Runner for Java** — Run and debug JUnit tests
+- **Project Manager for Java** — Dependency viewer and project overview
+
+### Step 2: Open the Project
+
+```
+File → Open Folder → select the WorldSettingsPlugin/ directory
+```
+
+VS Code will automatically detect the `pom.xml`, resolve all dependencies (including the Spigot API), and enable full IntelliSense across all classes. Wait about 30 seconds for the initial indexing — you'll see a loading indicator in the bottom status bar.
+
+### Step 3: Verify Java Configuration
+
+Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and run:
+```
+Java: Configure Java Runtime
+```
+
+Confirm that JDK 17+ is detected. If not, point it to your JDK installation:
+
+1. Open Settings (`Ctrl+,` / `Cmd+,`)
+2. Search for `java.jdt.ls.java.home`
+3. Set it to your JDK 17 path, for example:
+   - **Windows:** `C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.x-hotspot`
+   - **macOS:** `/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home`
+   - **Linux:** `/usr/lib/jvm/java-17-openjdk-amd64`
+
+### Step 4: Build from VS Code
+
+You have two options:
+
+**Option A: Maven sidebar (click-based)**
+1. Open the Maven sidebar panel (look for the "M" icon in the left activity bar)
+2. Expand **WorldSettingsPlugin** → **Lifecycle**
+3. Click **clean**, then **package**
+
+**Option B: Integrated terminal**
+```bash
+# Open the terminal with Ctrl+` (backtick)
+mvn clean package
+```
+
+Both produce the JAR at `target/world-settings-plugin-1.0.0.jar`.
+
+### Recommended Additional Extensions
+
+These are optional but helpful for Minecraft plugin development:
+
+| Extension | Purpose |
+|-----------|---------|
+| **XML** (Red Hat) | Better editing for `pom.xml` and `plugin.yml` |
+| **YAML** (Red Hat) | Syntax highlighting and validation for `.yml` files |
+| **GitLens** | Enhanced Git integration and blame annotations |
+| **Error Lens** | Displays errors and warnings inline next to your code |
+
+### VS Code Tips for This Project
+
+- **Go to Definition** — `Ctrl+Click` / `Cmd+Click` on any class or method name to jump to its source, including Spigot API classes
+- **Find All References** — Right-click a method → "Find All References" to see everywhere it's used
+- **Quick Fix** — Hover over a red underline and press `Ctrl+.` / `Cmd+.` for auto-import suggestions and fixes
+- **Rename Symbol** — `F2` on a variable or method to rename it everywhere in the project at once
+- **Build on Save** — The Java extension compiles in the background as you save, so errors appear immediately without running Maven
 
 ---
 
