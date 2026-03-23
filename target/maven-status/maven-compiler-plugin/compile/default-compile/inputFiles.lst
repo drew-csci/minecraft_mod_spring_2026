@@ -1,4 +1,6 @@
 /Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/WorldSettingsPlugin.java
 /Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/gui/SettingsGUI.java
+/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/listeners/CrimsonDescentManager.java
 /Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/listeners/GUIClickListener.java
+/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/listeners/PostEndListener.java
 /Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/settings/WorldSettings.java

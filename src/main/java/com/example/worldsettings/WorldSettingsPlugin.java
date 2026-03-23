@@ -2,6 +2,7 @@ package com.example.worldsettings;
 
 import com.example.worldsettings.gui.SettingsGUI;
 import com.example.worldsettings.listeners.GUIClickListener;
+import com.example.worldsettings.listeners.PostEndListener;
 import com.example.worldsettings.settings.WorldSettings;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -22,8 +23,12 @@ public class WorldSettingsPlugin extends JavaPlugin {
         instance = this;
         worldSettings = new WorldSettings();
 
-        // Register the GUI click listener
-        getServer().getPluginManager().registerEvents(new GUIClickListener(), this);
+    // Register the GUI click listener
+    getServer().getPluginManager().registerEvents(new GUIClickListener(), this);
+    // Register the post-end listener (dragon death activation + mob enhancements)
+    getServer().getPluginManager().registerEvents(new PostEndListener(), this);
+    // Start Crimson Descent manager which handles the nightly randomized event
+    new com.example.worldsettings.listeners.CrimsonDescentManager(this);
 
         getLogger().info("========================================");
         getLogger().info(" WorldSettingsPlugin v1.0.0 enabled!");
