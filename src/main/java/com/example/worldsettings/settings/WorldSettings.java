@@ -7,6 +7,16 @@ package com.example.worldsettings.settings;
 public class WorldSettings {
 
     // ── Left Column Settings ────────────────────────────────────────────
+    /**
+     * When true, the "post-end" phase is considered active.
+     *
+     * Control:
+     * - Toggle programmatically with `togglePostEndWorld()` or `setPostEndWorld(boolean)`.
+     * - This flag is checked by listeners (e.g. `PostEndListener`) to apply post-end behavior.
+     *
+     * Note: This value is in-memory only. To persist across restarts, add save/load logic in
+     * `WorldSettings` and call it from the plugin's `onEnable()` / `onDisable()`.
+     */
     private boolean postEndWorld = false;
     private double postEndDifficultyBoost = 1.0;   // 1.0x to 3.0x
     private boolean newBoss = false;
@@ -21,6 +31,36 @@ public class WorldSettings {
     private int firstBloodMoonDay = 3;              // 1, 3, or 5
     private int bloodMoonChancePercent = 10;        // % per night
     private boolean enhancedLootDrops = false;
+    
+    // ── Crimson Descent Event Settings ──────────────────────────────────
+    /**
+     * Master toggle for The Crimson Descent event. When false, the manager will skip all checks
+     * and the event will not occur.
+     *
+     * You can change this at runtime via `setCrimsonDescentEnabled(false)` for testing or
+     * configuration purposes. To expose in the GUI, add an item in `SettingsGUI` that calls
+     * `WorldSettings.setCrimsonDescentEnabled(...)`.
+     */
+    private boolean crimsonDescentEnabled = true;
+
+    /**
+     * Starting nightly chance (percentage) that the Crimson Descent will occur when night starts.
+     * If the event does not trigger, the manager increases the chance by +5% each day (configurable
+     * in the manager logic) until it triggers or reaches the forced maximum gap.
+     */
+    private int crimsonBaseChancePercent = 10;   // starting chance (percent)
+
+    /**
+     * The event will not trigger before this Minecraft day (world full days). For example, a value
+     * of 5 prevents Crimson Descent from occurring during the first 5 days.
+     */
+    private int crimsonMinStartDay = 5;          // event won't start before this day
+
+    /**
+     * The manager forces the event to happen if it hasn't occurred within this many days to guarantee
+     * at least one occurrence within the configured gap.
+     */
+    private int crimsonMaxGapDays = 7;           // ensure at least once in this many days
 
     // ── Enums ───────────────────────────────────────────────────────────
     public enum DifficultyLevel {
@@ -40,6 +80,10 @@ public class WorldSettings {
 
     public boolean isPostEndWorld()              { return postEndWorld; }
     public void togglePostEndWorld()             { postEndWorld = !postEndWorld; }
+    /**
+     * Explicitly set whether the post-end phase is active.
+     */
+    public void setPostEndWorld(boolean active)  { postEndWorld = active; }
 
     public double getPostEndDifficultyBoost()    { return postEndDifficultyBoost; }
     public void increasePostEndDifficulty()      {
@@ -87,4 +131,17 @@ public class WorldSettings {
 
     public boolean isEnhancedLootDrops()         { return enhancedLootDrops; }
     public void toggleEnhancedLootDrops()        { enhancedLootDrops = !enhancedLootDrops; }
+
+    // Crimson Descent accessors
+    public boolean isCrimsonDescentEnabled()     { return crimsonDescentEnabled; }
+    public void setCrimsonDescentEnabled(boolean v) { crimsonDescentEnabled = v; }
+
+    public int getCrimsonBaseChancePercent()    { return crimsonBaseChancePercent; }
+    public void setCrimsonBaseChancePercent(int p) { crimsonBaseChancePercent = Math.max(0, Math.min(100, p)); }
+
+    public int getCrimsonMinStartDay()           { return crimsonMinStartDay; }
+    public void setCrimsonMinStartDay(int d)     { crimsonMinStartDay = Math.max(0, d); }
+
+    public int getCrimsonMaxGapDays()            { return crimsonMaxGapDays; }
+    public void setCrimsonMaxGapDays(int d)      { crimsonMaxGapDays = Math.max(1, d); }
 }
