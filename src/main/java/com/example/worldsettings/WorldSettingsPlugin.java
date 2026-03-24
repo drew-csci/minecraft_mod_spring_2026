@@ -2,6 +2,7 @@ package com.example.worldsettings;
 
 import com.example.worldsettings.gui.SettingsGUI;
 import com.example.worldsettings.listeners.GUIClickListener;
+import com.example.worldsettings.listeners.DragonEggDestructionListener;
 import com.example.worldsettings.settings.WorldSettings;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * WorldSettingsPlugin - Main entry point.
  * Provides a GUI-based world settings menu accessible via /worldsettings.
+ * Includes gameplay features like the Void Devourer boss spawn on dragon egg destruction.
  */
 public class WorldSettingsPlugin extends JavaPlugin {
 
@@ -24,6 +26,9 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
         // Register the GUI click listener
         getServer().getPluginManager().registerEvents(new GUIClickListener(), this);
+        
+        // Register the dragon egg destruction listener (for Void Devourer boss spawn)
+        getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
 
         getLogger().info("========================================");
         getLogger().info(" WorldSettingsPlugin v1.0.0 enabled!");
