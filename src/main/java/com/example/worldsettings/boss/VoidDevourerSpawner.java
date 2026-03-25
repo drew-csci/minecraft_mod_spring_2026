@@ -4,20 +4,16 @@ import com.example.worldsettings.settings.WorldSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 /**
  * Handles spawning and configuring the Void Devourer boss —
@@ -80,34 +76,34 @@ public class VoidDevourerSpawner {
      * Performs red-themed summon effects: particles, sounds, and title message.
      */
     private static void performSummonEffects(World world, Location loc, Player triggerer) {
-        // Red particle burst (REDSTONE particles with red color)
-        for (int i = 0; i < 40; i++) {
-            double offsetX = (Math.random() - 0.5) * 8;
-            double offsetY = (Math.random() - 0.5) * 8;
-            double offsetZ = (Math.random() - 0.5) * 8;
-            
+        // Dense red dust cloud in two tones to make the summon look distinctly crimson.
+        for (int i = 0; i < 120; i++) {
+            double offsetX = (Math.random() - 0.5) * 10;
+            double offsetY = (Math.random() - 0.5) * 6;
+            double offsetZ = (Math.random() - 0.5) * 10;
+
             Location particleLoc = loc.clone().add(offsetX, offsetY, offsetZ);
-            world.spawnParticle(
-                Particle.REDSTONE,
-                particleLoc,
-                1,
-                0.1, 0.1, 0.1,
-                new Particle.DustOptions(
-                    org.bukkit.Color.RED,
-                    2.0f
-                )
-            );
+            Particle.DustOptions dust = (i % 2 == 0)
+                ? new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 25, 25), 2.5f)
+                : new Particle.DustOptions(org.bukkit.Color.fromRGB(120, 0, 0), 2.0f);
+            world.spawnParticle(Particle.REDSTONE, particleLoc, 1, 0.0, 0.0, 0.0, 0.0, dust);
         }
 
-        // Flame particles around center
-        for (int i = 0; i < 20; i++) {
-            double angle = (Math.PI * 2 * i) / 20;
-            double offsetX = Math.cos(angle) * 5;
-            double offsetZ = Math.sin(angle) * 5;
-            
-            Location particleLoc = loc.clone().add(offsetX, 2, offsetZ);
-            world.spawnParticle(Particle.FLAME, particleLoc, 3, 0.0, 0.0, 0.0, 0.1);
+        // Flame ring around summon center.
+        for (int i = 0; i < 40; i++) {
+            double angle = (Math.PI * 2 * i) / 40;
+            double offsetX = Math.cos(angle) * 6;
+            double offsetZ = Math.sin(angle) * 6;
+
+            Location particleLoc = loc.clone().add(offsetX, 1.5, offsetZ);
+            world.spawnParticle(Particle.FLAME, particleLoc, 6, 0.15, 0.15, 0.15, 0.01);
         }
+
+        // Dark smoke plume for void corruption effect.
+        world.spawnParticle(Particle.SMOKE_LARGE, loc.clone().add(0, 1.5, 0), 120, 2.8, 1.5, 2.8, 0.02);
+
+        // Dragon breath haze to hint this is a corrupted dragon variant.
+        world.spawnParticle(Particle.DRAGON_BREATH, loc.clone().add(0, 1.0, 0), 220, 3.2, 1.8, 3.2, 0.04);
 
         // Dramatic sound effect chain
         world.playSound(loc, Sound.ENTITY_ENDER_DRAGON_AMBIENT, 2.0f, 0.5f); // Deep roar
@@ -155,10 +151,30 @@ public class VoidDevourerSpawner {
             dmgAttr.setBaseValue(boostedDamage);
         }
 
+        // Try to scale dragon size when the server/API exposes GENERIC_SCALE.
+        // Uses reflection-safe enum lookup so this class still compiles on older APIs.
+        double sizeScale = 1.25 + (0.15 * difficultyMultiplier); // Easy~1.325, Medium~1.40, Hard~1.475
+        tryApplyScale(dragon, sizeScale);
+
         // Make the dragon aggressive and persistent
         dragon.setCustomName(ChatColor.DARK_RED + "Void Devourer");
         dragon.setCustomNameVisible(true);
         dragon.setRemoveWhenFarAway(false); // Dragon won't despawn
+    }
+
+    /**
+     * Applies entity scale if the running API supports GENERIC_SCALE.
+     */
+    private static void tryApplyScale(EnderDragon dragon, double scaleValue) {
+        try {
+            Attribute scaleAttribute = Attribute.valueOf("GENERIC_SCALE");
+            var scaleInstance = dragon.getAttribute(scaleAttribute);
+            if (scaleInstance != null) {
+                scaleInstance.setBaseValue(scaleValue);
+            }
+        } catch (IllegalArgumentException ignored) {
+            // GENERIC_SCALE is not available on this API version; skip sizing.
+        }
     }
 
     /**
