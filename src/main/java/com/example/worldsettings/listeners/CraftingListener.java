@@ -37,5 +37,33 @@ public class CraftingListener implements Listener {
                 }
             }
         }
+
+        // Check if the result is a Purifying Furnace (crafted from Furnace + Purifying Powder)
+        if (result.getType() == Material.FURNACE && result.hasItemMeta() &&
+            result.getItemMeta().hasCustomModelData() &&
+            result.getItemMeta().getCustomModelData() == 24) {
+            
+            // Verify that Purifying Powder is in the recipe
+            boolean hasPurifyingPowder = false;
+            boolean hasFurnace = false;
+            
+            for (ItemStack ingredient : event.getInventory().getMatrix()) {
+                if (ingredient != null) {
+                    if (ingredient.getType() == Material.FURNACE) {
+                        hasFurnace = true;
+                    }
+                    if (ingredient.getType() == Material.GLOWSTONE_DUST && ingredient.hasItemMeta() &&
+                        ingredient.getItemMeta().hasCustomModelData() &&
+                        ingredient.getItemMeta().getCustomModelData() == 9) {
+                        hasPurifyingPowder = true;
+                    }
+                }
+            }
+            
+            if (hasFurnace && hasPurifyingPowder) {
+                // Valid recipe, allow crafting
+                return;
+            }
+        }
     }
 }

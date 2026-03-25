@@ -30,7 +30,7 @@ public class ModdedItems {
         DROP_CHANCES.put("Copper Staff", 0.0);
         DROP_CHANCES.put("Copper Rod", 0.0);
         DROP_CHANCES.put("Lightning Bolt", 4.5);
-        DROP_CHANCES.put("Earth Golem Core", 5.5);
+        DROP_CHANCES.put("Purifying Powder", 10.0);
         DROP_CHANCES.put("Fire Essence", 7.0);
         DROP_CHANCES.put("Ice Crystal", 6.5);
         DROP_CHANCES.put("Wind Talisman", 5.0);
@@ -237,19 +237,19 @@ public class ModdedItems {
     }
 
     /**
-     * Creates Earth Golem Core item.
+     * Creates Purifying Powder item.
      * Texture: Custom model data 9
-     * Uses: Summons earth golems for protection
-     * Drop Chance: 5.5%
+     * Uses: Craft with furnace to create Purifying Furnace
+     * Drop Chance: 10.0% from Witches
      */
-    public static ItemStack createEarthGolemCore() {
-        ItemStack item = new ItemStack(Material.IRON_BLOCK);
+    public static ItemStack createPurifyingPowder() {
+        ItemStack item = new ItemStack(Material.GLOWSTONE_DUST);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GREEN + "Earth Golem Core");
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Purifying Powder");
         meta.setLore(Arrays.asList(
-            ChatColor.GRAY + "The heart of an earth golem.",
-            ChatColor.DARK_GREEN + "Summons earth golems to protect you.",
-            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Earth Golem Core") + "%"
+            ChatColor.GRAY + "A magical powder that purifies materials.",
+            ChatColor.LIGHT_PURPLE + "Craft with a furnace to create a Purifying Furnace.",
+            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Purifying Powder") + "%"
         ));
         meta.setCustomModelData(9);
         item.setItemMeta(meta);
@@ -472,6 +472,46 @@ public class ModdedItems {
             ChatColor.DARK_RED + "Does not destroy blocks."
         ));
         meta.setCustomModelData(20);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * Creates Cooked Flesh item.
+     * Texture: Custom model data 23
+     * Uses: Food item that restores hunger without poison effect
+     * Made by smelting Rotten Flesh in Purifying Furnace
+     */
+    public static ItemStack createCookedFlesh() {
+        ItemStack item = new ItemStack(Material.COOKED_MUTTON);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GOLD + "Cooked Flesh");
+        meta.setLore(Arrays.asList(
+            ChatColor.GRAY + "Purified rotten flesh that is safe to eat.",
+            ChatColor.GOLD + "Restores 3 hunger points.",
+            ChatColor.GREEN + "Does not inflict hunger effect."
+        ));
+        meta.setCustomModelData(23);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * Creates Purifying Furnace item.
+     * Texture: Custom model data 24
+     * Uses: Special furnace that can cook Rotten Flesh into Cooked Flesh
+     * Crafted from Furnace + Purifying Powder (in 2x2 grid or crafting table)
+     */
+    public static ItemStack createPurifyingFurnace() {
+        ItemStack item = new ItemStack(Material.FURNACE);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Purifying Furnace");
+        meta.setLore(Arrays.asList(
+            ChatColor.GRAY + "A furnace enhanced with purifying magic.",
+            ChatColor.LIGHT_PURPLE + "Smelts Rotten Flesh into safe Cooked Flesh.",
+            ChatColor.BLUE + "Works like a regular furnace for all other recipes."
+        ));
+        meta.setCustomModelData(24);
         item.setItemMeta(meta);
         return item;
     }

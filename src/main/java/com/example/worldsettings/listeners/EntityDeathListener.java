@@ -60,6 +60,11 @@ public class EntityDeathListener implements Listener {
         EntityType.WITHER_SKELETON
     );
 
+    // List of witch entity types that can drop Purifying Powder
+    private static final List<EntityType> WITCH_TYPES = Arrays.asList(
+        EntityType.WITCH
+    );
+
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
@@ -117,6 +122,17 @@ public class EntityDeathListener implements Listener {
             if (Math.random() < dropChance) {
                 ItemStack enrichedBoneMeal = ModdedItems.createEnrichedBoneMeal();
                 event.getDrops().add(enrichedBoneMeal);
+            }
+        }
+
+        // Check if the dead entity is a witch
+        if (WITCH_TYPES.contains(entityType)) {
+            double dropChance = ModdedItems.getDropChance("Purifying Powder") / 100.0; // Convert percentage to decimal
+
+            // Generate random number and check if item should drop
+            if (Math.random() < dropChance) {
+                ItemStack purifyingPowder = ModdedItems.createPurifyingPowder();
+                event.getDrops().add(purifyingPowder);
             }
         }
 

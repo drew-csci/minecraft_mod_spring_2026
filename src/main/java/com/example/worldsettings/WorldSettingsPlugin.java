@@ -6,6 +6,7 @@ import com.example.worldsettings.ModdedItems;
 import com.example.worldsettings.gui.SettingsGUI;
 import com.example.worldsettings.listeners.CraftingListener;
 import com.example.worldsettings.listeners.EntityDeathListener;
+import com.example.worldsettings.listeners.FurnaceListener;
 import com.example.worldsettings.listeners.GUIClickListener;
 import com.example.worldsettings.listeners.PlayerInteractListener;
 import com.example.worldsettings.listeners.PlayerMovementListener;
@@ -51,6 +52,9 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
         // Register the projectile listener for Exploding Arrows
         getServer().getPluginManager().registerEvents(new ProjectileListener(), this);
+
+        // Register the furnace listener for Purifying Furnace
+        getServer().getPluginManager().registerEvents(new FurnaceListener(), this);
 
         // Register custom recipes
         registerRecipes();
@@ -110,6 +114,15 @@ public class WorldSettingsPlugin extends JavaPlugin {
         copperStaffRecipe.setIngredient('S', Material.LIGHTNING_ROD);
         copperStaffRecipe.setIngredient('R', Material.LIGHTNING_ROD);
         getServer().addRecipe(copperStaffRecipe);
+
+        // Purifying Furnace recipe: Furnace + Purifying Powder in various arrangements
+        // Recipe 1: Furnace in center with Purifying Powder in corners (2x2)
+        NamespacedKey purifyingFurnaceKey = new NamespacedKey(this, "purifying_furnace");
+        ShapedRecipe purifyingFurnaceRecipe = new ShapedRecipe(purifyingFurnaceKey, ModdedItems.createPurifyingFurnace());
+        purifyingFurnaceRecipe.shape("PP", "PF");
+        purifyingFurnaceRecipe.setIngredient('P', new RecipeChoice.ExactChoice(ModdedItems.createPurifyingPowder()));
+        purifyingFurnaceRecipe.setIngredient('F', Material.FURNACE);
+        getServer().addRecipe(purifyingFurnaceRecipe);
     }
 
     @Override
