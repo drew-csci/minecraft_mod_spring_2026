@@ -4,11 +4,18 @@ main: com.example.worldsettings.WorldSettingsPlugin
 api-version: "1.20"
 description: Customizable world settings with an in-game GUI menu
 author: Developer
+
 commands:
   worldsettings:
     description: Opens the World Settings GUI
     usage: /worldsettings
     permission: worldsettings.use
+
+  progression:
+    description: Shows the player's progression score
+    usage: /progression
+    permission: worldsettings.use
+
 permissions:
   worldsettings.use:
     description: Allows opening the world settings menu
