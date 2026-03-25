@@ -30,8 +30,8 @@ public class HellZombieSpawner {
         zombie.setFireTicks(0);
 
         // Health / Strength
-        zombie.setMaxHealth(40);
-        zombie.setHealth(40);
+        zombie.setMaxHealth(25);
+        zombie.setHealth(25);
 
         // Glowing + potion effects
         zombie.setGlowing(true);
