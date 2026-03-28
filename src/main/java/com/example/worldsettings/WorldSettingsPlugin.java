@@ -4,6 +4,8 @@ import com.example.worldsettings.progression.ProgressionManager;
 import com.example.worldsettings.gui.SettingsGUI;
 import com.example.worldsettings.listeners.GUIClickListener;
 import com.example.worldsettings.settings.WorldSettings;
+import com.example.worldsettings.sidebar.PlayerJoinListener;
+import com.example.worldsettings.sidebar.PlayerAdvancementListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,9 +21,11 @@ public class WorldSettingsPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         worldSettings = new WorldSettings();
-        progressionManager = new ProgressionManager(); // ✅ IMPORTANT
+        progressionManager = new ProgressionManager();
 
         getServer().getPluginManager().registerEvents(new GUIClickListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerAdvancementListener(), this);
 
         getLogger().info("========================================");
         getLogger().info(" WorldSettingsPlugin v1.0.0 enabled!");
@@ -37,7 +41,6 @@ public class WorldSettingsPlugin extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        // EXISTING COMMAND
         if (command.getName().equalsIgnoreCase("worldsettings")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Only players can use this command.");
@@ -48,16 +51,21 @@ public class WorldSettingsPlugin extends JavaPlugin {
             return true;
         }
 
-        // ✅ NEW COMMAND
         if (command.getName().equalsIgnoreCase("progression")) {
             if (!(sender instanceof Player player)) {
                 sender.sendMessage("Only players can use this command.");
                 return true;
             }
 
-            int score = progressionManager.calculateProgressionScore(player);
-            player.sendMessage("§aYour progression score: §e" + score);
-            getLogger().info("[Progression] " + player.getName() + " score: " + score);
+            int completed = progressionManager.getCompletedAdvancementCount(player);
+            int total = progressionManager.getTotalTrackedAdvancements();
+            int percent = progressionManager.getProgressionPercent(player);
+            String rank = progressionManager.getDifficultyLabel(percent);
+
+            player.sendMessage("§aProgression: §e" + completed + "/" + total + " §7(" + percent + "%)");
+            player.sendMessage("§aRank: " + rank);
+
+            getLogger().info("[Progression] " + player.getName() + ": " + completed + "/" + total + " (" + percent + "%)");
 
             return true;
         }
@@ -71,5 +79,9 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
     public WorldSettings getWorldSettings() {
         return worldSettings;
+    }
+
+    public ProgressionManager getProgressionManager() {
+        return progressionManager;
     }
 }
