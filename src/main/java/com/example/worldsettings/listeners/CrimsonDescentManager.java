@@ -129,6 +129,22 @@ public class CrimsonDescentManager {
         return time >= 13000L && time <= 23000L;
     }
 
+    /**
+     * Helper for tests: determine whether the event should trigger given inputs.
+     * Exposed as static so tests can validate the manager's trigger logic without running
+     * the full server scheduler.
+     *
+     * @param chance current chance percent (1..100)
+     * @param daysSinceLast number of days since last event
+     * @param maxGapDays forced trigger gap
+     * @param roll an RNG roll value in range 1..100
+     * @return true if the event should trigger
+     */
+    public static boolean shouldTrigger(int chance, int daysSinceLast, int maxGapDays, int roll) {
+        if (daysSinceLast >= maxGapDays) return true;
+        return roll >= 1 && roll <= chance;
+    }
+
     private void startCrimsonDescent(World world) {
         // Choose a single mob type for the entire event
         EntityType chosen = MOB_TYPES[rng.nextInt(MOB_TYPES.length)];
