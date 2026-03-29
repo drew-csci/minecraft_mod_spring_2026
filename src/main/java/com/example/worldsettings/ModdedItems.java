@@ -31,12 +31,8 @@ public class ModdedItems {
         DROP_CHANCES.put("Copper Rod", 0.0);
         DROP_CHANCES.put("Lightning Bolt", 4.5);
         DROP_CHANCES.put("Purifying Powder", 10.0);
-        DROP_CHANCES.put("Fire Essence", 7.0);
-        DROP_CHANCES.put("Ice Crystal", 6.5);
-        DROP_CHANCES.put("Wind Talisman", 5.0);
-        DROP_CHANCES.put("Water Pearl", 8.0);
-        DROP_CHANCES.put("Light Amulet", 4.0);
-        DROP_CHANCES.put("Dark Ring", 3.0);
+        DROP_CHANCES.put("Bloodmoon Ingot", 7.0);
+        DROP_CHANCES.put("Upgrade Template", 6.5);
     }
 
     /**
@@ -257,19 +253,19 @@ public class ModdedItems {
     }
 
     /**
-     * Creates Fire Essence item.
+     * Creates Bloodmoon Ingot item.
      * Texture: Custom model data 10
-     * Uses: Ignites enemies and creates fire barriers
+     * Uses: Direct Netherite upgrade ingredient (Bloodmoon event reward)
      * Drop Chance: 7.0%
      */
-    public static ItemStack createFireEssence() {
-        ItemStack item = new ItemStack(Material.BLAZE_POWDER);
+    public static ItemStack createBloodmoonIngot() {
+        ItemStack item = new ItemStack(Material.NETHERITE_INGOT);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Fire Essence");
+        meta.setDisplayName(ChatColor.DARK_RED + "Bloodmoon Ingot");
         meta.setLore(Arrays.asList(
-            ChatColor.GRAY + "Pure essence of fire.",
-            ChatColor.RED + "Ignites enemies and creates fire barriers.",
-            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Fire Essence") + "%"
+            ChatColor.GRAY + "A rare ingot forged during the Bloodmoon.",
+            ChatColor.RED + "Used for upgrading Netherite gear into Bloodstone.",
+            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Bloodmoon Ingot") + "%"
         ));
         meta.setCustomModelData(10);
         item.setItemMeta(meta);
@@ -277,101 +273,21 @@ public class ModdedItems {
     }
 
     /**
-     * Creates Ice Crystal item.
+     * Creates Upgrade Template item.
      * Texture: Custom model data 11
-     * Uses: Freezes enemies and creates ice platforms
+     * Uses: Convert Netherite armor/tools into Bloodstone armor/tools (designs later)
      * Drop Chance: 6.5%
      */
-    public static ItemStack createIceCrystal() {
-        ItemStack item = new ItemStack(Material.DIAMOND);
+    public static ItemStack createUpgradeTemplate() {
+        ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.AQUA + "Ice Crystal");
+        meta.setDisplayName(ChatColor.AQUA + "Upgrade Template");
         meta.setLore(Arrays.asList(
-            ChatColor.GRAY + "A crystal formed from eternal ice.",
-            ChatColor.BLUE + "Freezes enemies and creates ice platforms.",
-            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Ice Crystal") + "%"
+            ChatColor.GRAY + "A mystical template used to craft Bloodstone upgrades.",
+            ChatColor.BLUE + "Can be duplicated with Blood Orb + diamonds.",
+            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Upgrade Template") + "%"
         ));
         meta.setCustomModelData(11);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
-     * Creates Wind Talisman item.
-     * Texture: Custom model data 12
-     * Uses: Grants speed boost and wind manipulation
-     * Drop Chance: 5.0%
-     */
-    public static ItemStack createWindTalisman() {
-        ItemStack item = new ItemStack(Material.EMERALD);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.WHITE + "Wind Talisman");
-        meta.setLore(Arrays.asList(
-            ChatColor.GRAY + "A talisman infused with wind spirits.",
-            ChatColor.GRAY + "Grants speed boost and wind manipulation abilities.",
-            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Wind Talisman") + "%"
-        ));
-        meta.setCustomModelData(12);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
-     * Creates Water Pearl item.
-     * Texture: Custom model data 13
-     * Uses: Allows underwater breathing and water manipulation
-     * Drop Chance: 8.0%
-     */
-    public static ItemStack createWaterPearl() {
-        ItemStack item = new ItemStack(Material.PRISMARINE_CRYSTALS);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.BLUE + "Water Pearl");
-        meta.setLore(Arrays.asList(
-            ChatColor.GRAY + "A pearl born from ocean depths.",
-            ChatColor.BLUE + "Grants underwater breathing and water control.",
-            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Water Pearl") + "%"
-        ));
-        meta.setCustomModelData(13);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
-     * Creates Light Amulet item.
-     * Texture: Custom model data 14
-     * Uses: Illuminates dark areas and repels darkness
-     * Drop Chance: 4.0%
-     */
-    public static ItemStack createLightAmulet() {
-        ItemStack item = new ItemStack(Material.GLOWSTONE_DUST);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.YELLOW + "Light Amulet");
-        meta.setLore(Arrays.asList(
-            ChatColor.GRAY + "An amulet that radiates pure light.",
-            ChatColor.YELLOW + "Illuminates darkness and repels evil.",
-            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Light Amulet") + "%"
-        ));
-        meta.setCustomModelData(14);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
-     * Creates Dark Ring item.
-     * Texture: Custom model data 15
-     * Uses: Enhances night vision and shadow powers
-     * Drop Chance: 3.0%
-     */
-    public static ItemStack createDarkRing() {
-        ItemStack item = new ItemStack(Material.COAL);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "Dark Ring");
-        meta.setLore(Arrays.asList(
-            ChatColor.GRAY + "A ring forged in darkness.",
-            ChatColor.DARK_PURPLE + "Enhances night vision and shadow manipulation.",
-            ChatColor.YELLOW + "Drop Chance: " + DROP_CHANCES.get("Dark Ring") + "%"
-        ));
-        meta.setCustomModelData(15);
         item.setItemMeta(meta);
         return item;
     }

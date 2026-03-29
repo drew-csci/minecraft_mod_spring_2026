@@ -14,6 +14,7 @@ import com.example.worldsettings.listeners.ProjectileListener;
 import com.example.worldsettings.settings.WorldSettings;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.command.Command;
@@ -115,14 +116,24 @@ public class WorldSettingsPlugin extends JavaPlugin {
         copperStaffRecipe.setIngredient('R', Material.LIGHTNING_ROD);
         getServer().addRecipe(copperStaffRecipe);
 
-        // Purifying Furnace recipe: Furnace + Purifying Powder in various arrangements
-        // Recipe 1: Furnace in center with Purifying Powder in corners (2x2)
+        // Purifying Furnace recipe: Furnace + Purifying Powder (1x2 vertical)
         NamespacedKey purifyingFurnaceKey = new NamespacedKey(this, "purifying_furnace");
         ShapedRecipe purifyingFurnaceRecipe = new ShapedRecipe(purifyingFurnaceKey, ModdedItems.createPurifyingFurnace());
-        purifyingFurnaceRecipe.shape("PP", "PF");
+        purifyingFurnaceRecipe.shape("P", "F");
         purifyingFurnaceRecipe.setIngredient('P', new RecipeChoice.ExactChoice(ModdedItems.createPurifyingPowder()));
         purifyingFurnaceRecipe.setIngredient('F', Material.FURNACE);
         getServer().addRecipe(purifyingFurnaceRecipe);
+
+        // Upgrade Template duplication recipe (1 template + 1 Blood Orb + 7 diamonds -> 2 templates)
+        ItemStack twoTemplates = ModdedItems.createUpgradeTemplate();
+        twoTemplates.setAmount(2);
+        NamespacedKey templateDuplicateKey = new NamespacedKey(this, "upgrade_template_duplicate");
+        ShapedRecipe templateDuplicateRecipe = new ShapedRecipe(templateDuplicateKey, twoTemplates);
+        templateDuplicateRecipe.shape("DDD", "TBT", "DDD");
+        templateDuplicateRecipe.setIngredient('D', Material.DIAMOND);
+        templateDuplicateRecipe.setIngredient('T', new RecipeChoice.ExactChoice(ModdedItems.createUpgradeTemplate()));
+        templateDuplicateRecipe.setIngredient('B', new RecipeChoice.ExactChoice(ModdedItems.createBloodOrb()));
+        getServer().addRecipe(templateDuplicateRecipe);
     }
 
     @Override
