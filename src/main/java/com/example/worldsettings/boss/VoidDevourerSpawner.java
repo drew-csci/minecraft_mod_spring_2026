@@ -181,7 +181,7 @@ public class VoidDevourerSpawner {
      * Returns a difficulty multiplier based on the set difficulty.
      * EASY = 0.5x, MEDIUM = 1.0x, HARD = 1.5x
      */
-    private static double getDifficultyMultiplier(WorldSettings.DifficultyLevel difficulty) {
+    static double getDifficultyMultiplier(WorldSettings.DifficultyLevel difficulty) {
         switch (difficulty) {
             case EASY:
                 return 0.5;
@@ -197,7 +197,7 @@ public class VoidDevourerSpawner {
     /**
      * Generates a random spawn location near a center point.
      */
-    private static Location generateRandomSpawnNearby(Location center, int radius) {
+    static Location generateRandomSpawnNearby(Location center, int radius) {
         double angle = Math.random() * Math.PI * 2;
         double distance = Math.random() * radius;
         double offsetX = Math.cos(angle) * distance;

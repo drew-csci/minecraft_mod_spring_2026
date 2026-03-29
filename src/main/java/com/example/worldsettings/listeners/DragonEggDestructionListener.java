@@ -15,29 +15,42 @@ import org.bukkit.World;
  */
 public class DragonEggDestructionListener implements Listener {
 
+    static boolean shouldSpawnBoss(Material material, World.Environment environment, WorldSettings settings) {
+        if (material != Material.DRAGON_EGG) {
+            return false;
+        }
+
+        if (environment != World.Environment.NORMAL) {
+            return false;
+        }
+
+        return settings.isNewBoss();
+    }
+
+    void triggerSpawn(World world, Player player, WorldSettings settings) {
+        VoidDevourerSpawner.spawnVoidDevourer(world, player, settings);
+    }
+
+    void handleDragonEggBreak(Material material, World.Environment environment, World world, Player player, WorldSettings settings) {
+        if (!shouldSpawnBoss(material, environment, settings)) {
+            return;
+        }
+
+        triggerSpawn(world, player, settings);
+    }
+
     @EventHandler
     public void onDragonEggDestruction(BlockBreakEvent event) {
-        // Check if the destroyed block is a dragon egg
-        if (event.getBlock().getType() != Material.DRAGON_EGG) {
-            return;
-        }
-
-        // Get the player who destroyed it
         Player player = event.getPlayer();
         World world = player.getWorld();
-
-        // Check if this is the Overworld (End dimension events may need custom handling)
-        if (world.getEnvironment() != World.Environment.NORMAL) {
-            return;
-        }
-
-        // Check if the New Boss feature is enabled
         WorldSettings settings = WorldSettingsPlugin.getInstance().getWorldSettings();
-        if (!settings.isNewBoss()) {
-            return;
-        }
 
-        // Trigger the Void Devourer spawn sequence
-        VoidDevourerSpawner.spawnVoidDevourer(world, player, settings);
+        handleDragonEggBreak(
+                event.getBlock().getType(),
+                world.getEnvironment(),
+                world,
+                player,
+                settings
+        );
     }
 }
