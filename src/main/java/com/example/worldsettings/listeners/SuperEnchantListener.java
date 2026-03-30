@@ -6,6 +6,7 @@ import com.example.worldsettings.superenchant.SuperEnchantmentTableGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -14,10 +15,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -88,6 +90,10 @@ public class SuperEnchantListener implements Listener {
         if (SuperEnchantmentTableGUI.isCloseSlot(rawSlot)) {
             event.setCancelled(true);
             player.closeInventory();
+            return;
+        }
+
+        if (rawSlot == SuperEnchantmentTableGUI.INPUT_SLOT) {
             return;
         }
 
@@ -231,5 +237,38 @@ public class SuperEnchantListener implements Listener {
                 livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 1, false, false, false));
             }
         }
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (event.getView().getTitle() == null || !event.getView().getTitle().equals(SuperEnchantmentTableGUI.MENU_TITLE)) {
+            return;
+        }
+
+        if (!(event.getPlayer() instanceof Player)) {
+            return;
+        }
+
+        Player player = (Player) event.getPlayer();
+        ItemStack inputItem = event.getInventory().getItem(SuperEnchantmentTableGUI.INPUT_SLOT);
+        if (inputItem == null || inputItem.getType() == Material.AIR || isPlaceholderItem(inputItem)) {
+            return;
+        }
+
+        event.getInventory().setItem(SuperEnchantmentTableGUI.INPUT_SLOT, null);
+        HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(inputItem);
+        leftovers.values().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
+    }
+
+    private boolean isPlaceholderItem(ItemStack item) {
+        if (item == null || item.getType() != Material.BOOK) {
+            return false;
+        }
+        if (!item.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta meta = item.getItemMeta();
+        return meta.hasDisplayName()
+            && meta.getDisplayName().equals(ChatColor.YELLOW + "Insert Item Here");
     }
 }
