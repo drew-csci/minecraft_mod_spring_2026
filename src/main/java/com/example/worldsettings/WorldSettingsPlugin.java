@@ -4,14 +4,12 @@ import org.bukkit.Material;
 
 import com.example.worldsettings.ModdedItems;
 import com.example.worldsettings.gui.SettingsGUI;
-<<<<<<< HEAD
-=======
->>>>>>> origin/your_logan_kleva_branch_1
 
 import com.example.worldsettings.listeners.CraftingListener;
 import com.example.worldsettings.listeners.EntityDeathListener;
 import com.example.worldsettings.listeners.FurnaceListener;
 import com.example.worldsettings.listeners.GUIClickListener;
+import com.example.worldsettings.listeners.HellCreeperListener;
 import com.example.worldsettings.listeners.PostEndListener;
 import com.example.worldsettings.listeners.PlayerInteractListener;
 import com.example.worldsettings.listeners.PlayerMovementListener;
@@ -53,6 +51,7 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
         // Register the crafting listener for custom recipes
         getServer().getPluginManager().registerEvents(new CraftingListener(), this);
+        getServer().getPluginManager().registerEvents(new HellCreeperListener(), this);
 
         // Register the player movement listener for Spider Boots
         getServer().getPluginManager().registerEvents(new PlayerMovementListener(), this);
