@@ -1,6 +1,11 @@
-/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/WorldSettingsPlugin.java
-/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/gui/SettingsGUI.java
-/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/listeners/CrimsonDescentManager.java
-/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/listeners/GUIClickListener.java
-/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/listeners/PostEndListener.java
-/Users/yifengwang/MC mod/minecraft_mod_spring_2026/src/main/java/com/example/worldsettings/settings/WorldSettings.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\gui\SettingsGUI.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\listeners\CraftingListener.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\listeners\EntityDeathListener.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\listeners\FurnaceListener.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\listeners\GUIClickListener.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\listeners\PlayerInteractListener.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\listeners\PlayerMovementListener.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\listeners\ProjectileListener.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\ModdedItems.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\settings\WorldSettings.java
+C:\Users\solar\CSCI340\Coding Project 2\minecraft_mod_spring_2026\src\main\java\com\example\worldsettings\WorldSettingsPlugin.java
