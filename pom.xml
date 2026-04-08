@@ -27,56 +27,6 @@
     </repositories>
 
     <dependencies>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-<<<<<<< HEAD
-        <!-- JUnit for unit and integration tests -->
-=======
->>>>>>> origin/your_logan_kleva_branch_1
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Built-By>${project.name}</Built-By>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-<<<<<<< HEAD
-            <!-- Configure surefire for JUnit 5 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <useModulePath>false</useModulePath>
-=======
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
->>>>>>> origin/your_logan_kleva_branch_1
-                </configuration>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -114,7 +64,6 @@
                         <include>**/*Test.java</include>
                     </includes>
                 </configuration>
-            </plugin>
             </plugin>
         </plugins>
     </build>
