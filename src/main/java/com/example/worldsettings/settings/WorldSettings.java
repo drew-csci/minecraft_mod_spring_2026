@@ -6,6 +6,19 @@ package com.example.worldsettings.settings;
  */
 public class WorldSettings {
 
+    // ── Mob Ability Settings (Dodge) ─────────────────────────────
+    private boolean enhancedMobDodgeEnabled = true;
+    private int dodgeChancePercent = 20; // default 20%
+    private int dodgeCooldownTicks = 40; // default 2 seconds (40 ticks)
+
+
+    public boolean isEnhancedMobDodgeEnabled() { return enhancedMobDodgeEnabled; }
+    public void setEnhancedMobDodgeEnabled(boolean enabled) { this.enhancedMobDodgeEnabled = enabled; }
+    public int getDodgeChancePercent() { return dodgeChancePercent; }
+    public void setDodgeChancePercent(int percent) { this.dodgeChancePercent = Math.max(0, Math.min(100, percent)); }
+    public int getDodgeCooldownTicks() { return dodgeCooldownTicks; }
+    public void setDodgeCooldownTicks(int ticks) { this.dodgeCooldownTicks = Math.max(0, ticks); }
+
     // ── Left Column Settings ────────────────────────────────────────────
     /**
      * When true, the "post-end" phase is considered active.
