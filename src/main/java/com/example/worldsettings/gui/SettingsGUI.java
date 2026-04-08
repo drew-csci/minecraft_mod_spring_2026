@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -99,7 +100,11 @@ public class SettingsGUI {
         // 4. Horde Events: ON/OFF
         gui.setItem(SLOT_HORDE_EVENTS, createToggleItem(
             "Horde Events", s.isHordeEvents(),
-            Material.ZOMBIE_HEAD, Material.PLAYER_HEAD));
+            Material.ZOMBIE_HEAD, Material.PLAYER_HEAD,
+            Arrays.asList(
+                ChatColor.RED + "Performance: Moderate",
+                ChatColor.GRAY + "Spawns more mobs when enabled"
+            )));
 
         // 5. Maximum Horde Size: slider 10-100
         gui.setItem(SLOT_MAX_HORDE_SIZE, createItem(
@@ -108,6 +113,7 @@ public class SettingsGUI {
             Arrays.asList(
                 ChatColor.WHITE + "Current: " + ChatColor.GREEN + s.getMaximumHordeSize(),
                 ChatColor.GRAY + "Range: 10 - 100",
+                ChatColor.RED + "Performance: High at larger values",
                 "",
                 ChatColor.DARK_GRAY + "Left-click: +10  |  Right-click: -10"
             )));
@@ -142,6 +148,7 @@ public class SettingsGUI {
             Arrays.asList(
                 ChatColor.WHITE + "Current: " + ChatColor.GREEN + s.getBloodMoonSpawnMultiplier() + "%",
                 ChatColor.GRAY + "Range: 25% - 500%",
+                ChatColor.RED + "Performance: High at values above 100%",
                 "",
                 ChatColor.DARK_GRAY + "Left-click: +25%  |  Right-click: -25%"
             )));
@@ -172,22 +179,37 @@ public class SettingsGUI {
 
     // ── Helper Methods ──────────────────────────────────────────────────
 
+    static List<String> buildToggleLore(boolean enabled, List<String> extraLore) {
+        String status = enabled
+            ? ChatColor.GREEN + "" + ChatColor.BOLD + "ON"
+            : ChatColor.RED + "" + ChatColor.BOLD + "OFF";
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.WHITE + "Status: " + status);
+        if (extraLore != null && !extraLore.isEmpty()) {
+            lore.add("");
+            lore.addAll(extraLore);
+        }
+        lore.add("");
+        lore.add(ChatColor.DARK_GRAY + "Click to toggle");
+        return lore;
+    }
+
     /**
      * Creates a toggle-style item: green name + ON material, or red + OFF material.
      */
     private static ItemStack createToggleItem(String name, boolean enabled,
                                                Material onMat, Material offMat) {
-        String status = enabled
-            ? ChatColor.GREEN + "" + ChatColor.BOLD + "ON"
-            : ChatColor.RED + "" + ChatColor.BOLD + "OFF";
+        return createToggleItem(name, enabled, onMat, offMat, null);
+    }
+
+    private static ItemStack createToggleItem(String name, boolean enabled,
+                                               Material onMat, Material offMat,
+                                               List<String> extraLore) {
+        List<String> lore = buildToggleLore(enabled, extraLore);
         return createItem(
             enabled ? onMat : offMat,
             ChatColor.YELLOW + name,
-            Arrays.asList(
-                ChatColor.WHITE + "Status: " + status,
-                "",
-                ChatColor.DARK_GRAY + "Click to toggle"
-            ));
+            lore);
     }
 
     /**
