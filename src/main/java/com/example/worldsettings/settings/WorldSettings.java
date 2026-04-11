@@ -16,6 +16,12 @@ public class WorldSettings {
     public static final int MAX_BLOOD_MOON_SPAWN = 500;
     public static final int MIN_BLOOD_MOON_CHANCE = 0;
     public static final int MAX_BLOOD_MOON_CHANCE = 100;
+    public static final int MIN_CRIMSON_START_DAY = 1;
+    public static final int MAX_CRIMSON_START_DAY = 100;
+    public static final int MIN_CRIMSON_BASE_CHANCE = 1;
+    public static final int MAX_CRIMSON_BASE_CHANCE = 100;
+    public static final int MIN_CRIMSON_MAX_GAP_DAYS = 1;
+    public static final int MAX_CRIMSON_MAX_GAP_DAYS = 30;
 
     // ── Left Column Settings ────────────────────────────────────────────
     private boolean postEndWorld = false;
@@ -32,6 +38,12 @@ public class WorldSettings {
     private int firstBloodMoonDay = 3;              // 1, 3, or 5
     private int bloodMoonChancePercent = 10;        // % per night
     private boolean enhancedLootDrops = false;
+
+    // ── Crimson Descent Settings ───────────────────────────────────────
+    private boolean crimsonDescentEnabled = false;
+    private int crimsonMinStartDay = 3;
+    private int crimsonBaseChancePercent = 10;
+    private int crimsonMaxGapDays = 5;
 
     // ── Enums ───────────────────────────────────────────────────────────
     public enum DifficultyLevel {
@@ -50,6 +62,7 @@ public class WorldSettings {
     // ── Getters & Setters ───────────────────────────────────────────────
 
     public boolean isPostEndWorld()              { return postEndWorld; }
+    public void setPostEndWorld(boolean enabled) { postEndWorld = enabled; }
     public void togglePostEndWorld()             { postEndWorld = !postEndWorld; }
 
     public double getPostEndDifficultyBoost()    { return postEndDifficultyBoost; }
@@ -99,6 +112,24 @@ public class WorldSettings {
     public boolean isEnhancedLootDrops()         { return enhancedLootDrops; }
     public void toggleEnhancedLootDrops()        { enhancedLootDrops = !enhancedLootDrops; }
 
+    public boolean isCrimsonDescentEnabled()     { return crimsonDescentEnabled; }
+    public void setCrimsonDescentEnabled(boolean enabled) { crimsonDescentEnabled = enabled; }
+
+    public int getCrimsonMinStartDay()           { return crimsonMinStartDay; }
+    public void setCrimsonMinStartDay(int value) {
+        crimsonMinStartDay = clampInt(value, MIN_CRIMSON_START_DAY, MAX_CRIMSON_START_DAY);
+    }
+
+    public int getCrimsonBaseChancePercent()     { return crimsonBaseChancePercent; }
+    public void setCrimsonBaseChancePercent(int value) {
+        crimsonBaseChancePercent = clampInt(value, MIN_CRIMSON_BASE_CHANCE, MAX_CRIMSON_BASE_CHANCE);
+    }
+
+    public int getCrimsonMaxGapDays()            { return crimsonMaxGapDays; }
+    public void setCrimsonMaxGapDays(int value) {
+        crimsonMaxGapDays = clampInt(value, MIN_CRIMSON_MAX_GAP_DAYS, MAX_CRIMSON_MAX_GAP_DAYS);
+    }
+
     // ── Config mapping and validation ───────────────────────────────────
 
     public void loadFromConfig(FileConfiguration config) {
@@ -136,6 +167,23 @@ public class WorldSettings {
             MAX_BLOOD_MOON_CHANCE
         );
         enhancedLootDrops = config.getBoolean("blood_moon.enhanced_loot_drops", false);
+
+        crimsonDescentEnabled = config.getBoolean("crimson_descent.enabled", false);
+        crimsonMinStartDay = clampInt(
+            config.getInt("crimson_descent.min_start_day", 3),
+            MIN_CRIMSON_START_DAY,
+            MAX_CRIMSON_START_DAY
+        );
+        crimsonBaseChancePercent = clampInt(
+            config.getInt("crimson_descent.base_chance_percent", 10),
+            MIN_CRIMSON_BASE_CHANCE,
+            MAX_CRIMSON_BASE_CHANCE
+        );
+        crimsonMaxGapDays = clampInt(
+            config.getInt("crimson_descent.max_gap_days", 5),
+            MIN_CRIMSON_MAX_GAP_DAYS,
+            MAX_CRIMSON_MAX_GAP_DAYS
+        );
     }
 
     public void writeToConfig(FileConfiguration config) {
@@ -152,6 +200,11 @@ public class WorldSettings {
         config.set("blood_moon.first_blood_moon_day", firstBloodMoonDay);
         config.set("blood_moon.chance_percent_per_night", bloodMoonChancePercent);
         config.set("blood_moon.enhanced_loot_drops", enhancedLootDrops);
+
+        config.set("crimson_descent.enabled", crimsonDescentEnabled);
+        config.set("crimson_descent.min_start_day", crimsonMinStartDay);
+        config.set("crimson_descent.base_chance_percent", crimsonBaseChancePercent);
+        config.set("crimson_descent.max_gap_days", crimsonMaxGapDays);
     }
 
     public void sanitizeRanges() {
@@ -159,6 +212,9 @@ public class WorldSettings {
         maximumHordeSize = clampInt(maximumHordeSize, MIN_MAX_HORDE_SIZE, MAX_MAX_HORDE_SIZE);
         bloodMoonSpawnMultiplier = clampInt(bloodMoonSpawnMultiplier, MIN_BLOOD_MOON_SPAWN, MAX_BLOOD_MOON_SPAWN);
         bloodMoonChancePercent = clampInt(bloodMoonChancePercent, MIN_BLOOD_MOON_CHANCE, MAX_BLOOD_MOON_CHANCE);
+        crimsonMinStartDay = clampInt(crimsonMinStartDay, MIN_CRIMSON_START_DAY, MAX_CRIMSON_START_DAY);
+        crimsonBaseChancePercent = clampInt(crimsonBaseChancePercent, MIN_CRIMSON_BASE_CHANCE, MAX_CRIMSON_BASE_CHANCE);
+        crimsonMaxGapDays = clampInt(crimsonMaxGapDays, MIN_CRIMSON_MAX_GAP_DAYS, MAX_CRIMSON_MAX_GAP_DAYS);
         if (firstBloodMoonDay != 1 && firstBloodMoonDay != 3 && firstBloodMoonDay != 5) {
             firstBloodMoonDay = 3;
         }
