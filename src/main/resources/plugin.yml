@@ -6,10 +6,13 @@ description: Customizable world settings with an in-game GUI menu
 author: Developer
 commands:
   worldsettings:
-    description: Opens the World Settings GUI
-    usage: /worldsettings
+    description: Opens the World Settings GUI or reloads config
+    usage: /worldsettings [reload]
     permission: worldsettings.use
 permissions:
   worldsettings.use:
     description: Allows opening the world settings menu
+    default: op
+  worldsettings.reload:
+    description: Allows reloading world settings config
     default: op

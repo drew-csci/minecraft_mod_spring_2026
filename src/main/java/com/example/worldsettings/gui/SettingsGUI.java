@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
  *   Row 4: [slot 36-39] Left Item 4   |  divider  |  [slot 41-44]  Right Item 4
  *   Row 5: [slot 45-48] Left Item 5   |  divider  |  [slot 50-53]  Right Item 5
  *
- * Each setting occupies one clickable slot per row (left col + right col).
+ * Each setting occupies one clickable slot grouped by config section.
  */
 public class SettingsGUI {
 
@@ -38,6 +39,7 @@ public class SettingsGUI {
     public static final int SLOT_NEW_BOSS              = 28;
     public static final int SLOT_HORDE_EVENTS          = 37;
     public static final int SLOT_MAX_HORDE_SIZE        = 46;
+    public static final int SLOT_ENHANCED_MOBS         = 47;
 
     // Slot positions for right-column items (rows 1-5, column 7)
     public static final int SLOT_DIFFICULTY_LEVEL      = 14;
@@ -45,6 +47,7 @@ public class SettingsGUI {
     public static final int SLOT_BLOOD_MOON_SPAWN      = 32;
     public static final int SLOT_FIRST_BLOOD_MOON      = 41;
     public static final int SLOT_BLOOD_MOON_CHANCE     = 50;
+    public static final int SLOT_ENHANCED_LOOT         = 51;
 
     /**
      * Opens the settings menu for a player.
@@ -63,8 +66,8 @@ public class SettingsGUI {
         gui.setItem(4, createItem(Material.NETHER_STAR,
             ChatColor.GOLD + "" + ChatColor.BOLD + "World Settings",
             Arrays.asList(
-                ChatColor.GRAY + "Basic Settings",
-                ChatColor.DARK_GRAY + "Click items to toggle"
+                ChatColor.GRAY + "Sections: Post-End World and Blood Moon",
+                ChatColor.DARK_GRAY + "Left-click increase | Right-click decrease"
             )));
 
         // ── Center column divider (column 4, slots 4/13/22/31/40/49) ───
@@ -99,7 +102,11 @@ public class SettingsGUI {
         // 4. Horde Events: ON/OFF
         gui.setItem(SLOT_HORDE_EVENTS, createToggleItem(
             "Horde Events", s.isHordeEvents(),
-            Material.ZOMBIE_HEAD, Material.PLAYER_HEAD));
+            Material.ZOMBIE_HEAD, Material.PLAYER_HEAD,
+            Arrays.asList(
+                ChatColor.RED + "Performance: Moderate",
+                ChatColor.GRAY + "Spawns more mobs when enabled"
+            )));
 
         // 5. Maximum Horde Size: slider 10-100
         gui.setItem(SLOT_MAX_HORDE_SIZE, createItem(
@@ -108,9 +115,14 @@ public class SettingsGUI {
             Arrays.asList(
                 ChatColor.WHITE + "Current: " + ChatColor.GREEN + s.getMaximumHordeSize(),
                 ChatColor.GRAY + "Range: 10 - 100",
+                ChatColor.RED + "Performance: High at larger values",
                 "",
                 ChatColor.DARK_GRAY + "Left-click: +10  |  Right-click: -10"
             )));
+
+        gui.setItem(SLOT_ENHANCED_MOBS, createToggleItem(
+            "Enhanced Mobs", s.isEnhancedMobs(),
+            Material.BLAZE_ROD, Material.STICK));
 
         // ── RIGHT COLUMN ────────────────────────────────────────────────
 
@@ -142,6 +154,7 @@ public class SettingsGUI {
             Arrays.asList(
                 ChatColor.WHITE + "Current: " + ChatColor.GREEN + s.getBloodMoonSpawnMultiplier() + "%",
                 ChatColor.GRAY + "Range: 25% - 500%",
+                ChatColor.RED + "Performance: High at values above 100%",
                 "",
                 ChatColor.DARK_GRAY + "Left-click: +25%  |  Right-click: -25%"
             )));
@@ -167,27 +180,46 @@ public class SettingsGUI {
                 ChatColor.DARK_GRAY + "Left-click: +5%  |  Right-click: -5%"
             )));
 
+        gui.setItem(SLOT_ENHANCED_LOOT, createToggleItem(
+            "Enhanced Loot Drops", s.isEnhancedLootDrops(),
+            Material.EMERALD, Material.FLINT));
+
         player.openInventory(gui);
     }
 
     // ── Helper Methods ──────────────────────────────────────────────────
+
+    static List<String> buildToggleLore(boolean enabled, List<String> extraLore) {
+        String status = enabled
+            ? ChatColor.GREEN + "" + ChatColor.BOLD + "ON"
+            : ChatColor.RED + "" + ChatColor.BOLD + "OFF";
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.WHITE + "Status: " + status);
+        if (extraLore != null && !extraLore.isEmpty()) {
+            lore.add("");
+            lore.addAll(extraLore);
+        }
+        lore.add("");
+        lore.add(ChatColor.DARK_GRAY + "Click to toggle");
+        return lore;
+    }
 
     /**
      * Creates a toggle-style item: green name + ON material, or red + OFF material.
      */
     private static ItemStack createToggleItem(String name, boolean enabled,
                                                Material onMat, Material offMat) {
-        String status = enabled
-            ? ChatColor.GREEN + "" + ChatColor.BOLD + "ON"
-            : ChatColor.RED + "" + ChatColor.BOLD + "OFF";
+        return createToggleItem(name, enabled, onMat, offMat, null);
+    }
+
+    private static ItemStack createToggleItem(String name, boolean enabled,
+                                               Material onMat, Material offMat,
+                                               List<String> extraLore) {
+        List<String> lore = buildToggleLore(enabled, extraLore);
         return createItem(
             enabled ? onMat : offMat,
             ChatColor.YELLOW + name,
-            Arrays.asList(
-                ChatColor.WHITE + "Status: " + status,
-                "",
-                ChatColor.DARK_GRAY + "Click to toggle"
-            ));
+            lore);
     }
 
     /**
