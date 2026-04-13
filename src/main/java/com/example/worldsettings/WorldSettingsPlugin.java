@@ -3,9 +3,11 @@ package com.example.worldsettings;
 import com.example.worldsettings.progression.ProgressionManager;
 import com.example.worldsettings.gui.SettingsGUI;
 import com.example.worldsettings.listeners.GUIClickListener;
+import com.example.worldsettings.listeners.WorldSettingsGameplayListener;
 import com.example.worldsettings.settings.WorldSettings;
 import com.example.worldsettings.sidebar.PlayerJoinListener;
 import com.example.worldsettings.sidebar.PlayerAdvancementListener;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,7 +25,12 @@ public class WorldSettingsPlugin extends JavaPlugin {
         worldSettings = new WorldSettings();
         progressionManager = new ProgressionManager();
 
+        saveDefaultConfig();
+        reloadSettingsFromConfig();
+
+        // Register listeners
         getServer().getPluginManager().registerEvents(new GUIClickListener(), this);
+        getServer().getPluginManager().registerEvents(new WorldSettingsGameplayListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerAdvancementListener(), this);
 
@@ -42,6 +49,17 @@ public class WorldSettingsPlugin extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (command.getName().equalsIgnoreCase("worldsettings")) {
+            if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+                if (!sender.hasPermission("worldsettings.reload")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to reload settings.");
+                    return true;
+                }
+                reloadConfig();
+                reloadSettingsFromConfig();
+                sender.sendMessage(ChatColor.GREEN + "World settings config reloaded.");
+                return true;
+            }
+
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Only players can use this command.");
                 return true;
@@ -83,5 +101,18 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
     public ProgressionManager getProgressionManager() {
         return progressionManager;
+    }
+
+    public void reloadSettingsFromConfig() {
+        worldSettings.loadFromConfig(getConfig());
+        worldSettings.sanitizeRanges();
+        worldSettings.writeToConfig(getConfig());
+        saveConfig();
+    }
+
+    public void saveSettingsToConfig() {
+        worldSettings.sanitizeRanges();
+        worldSettings.writeToConfig(getConfig());
+        saveConfig();
     }
 }
