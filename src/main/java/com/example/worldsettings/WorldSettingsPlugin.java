@@ -2,6 +2,9 @@ package com.example.worldsettings;
 
 import com.example.worldsettings.progression.ProgressionManager;
 import com.example.worldsettings.gui.SettingsGUI;
+import com.example.worldsettings.listeners.CraftingListener;
+import com.example.worldsettings.listeners.EntityDeathListener;
+import com.example.worldsettings.listeners.FurnaceListener;
 import com.example.worldsettings.listeners.GUIClickListener;
 import com.example.worldsettings.listeners.DragonEggDestructionListener;
 import com.example.worldsettings.listeners.WorldSettingsGameplayListener;

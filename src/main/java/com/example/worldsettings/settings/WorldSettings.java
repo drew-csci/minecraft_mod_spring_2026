@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class WorldSettings {
 
+    // Constants for configuration ranges
     public static final double MIN_POST_END_DIFFICULTY = 1.0;
     public static final double MAX_POST_END_DIFFICULTY = 3.0;
     public static final int MIN_MAX_HORDE_SIZE = 10;
@@ -22,6 +23,18 @@ public class WorldSettings {
     public static final int MAX_CRIMSON_BASE_CHANCE = 100;
     public static final int MIN_CRIMSON_MAX_GAP_DAYS = 1;
     public static final int MAX_CRIMSON_MAX_GAP_DAYS = 30;
+
+    // ── Mob Ability Settings (Dodge) ─────────────────────────────
+    private boolean enhancedMobDodgeEnabled = true;
+    private int dodgeChancePercent = 20; // default 20%
+    private int dodgeCooldownTicks = 40; // default 2 seconds (40 ticks)
+
+    public boolean isEnhancedMobDodgeEnabled() { return enhancedMobDodgeEnabled; }
+    public void setEnhancedMobDodgeEnabled(boolean enabled) { this.enhancedMobDodgeEnabled = enabled; }
+    public int getDodgeChancePercent() { return dodgeChancePercent; }
+    public void setDodgeChancePercent(int percent) { this.dodgeChancePercent = Math.max(0, Math.min(100, percent)); }
+    public int getDodgeCooldownTicks() { return dodgeCooldownTicks; }
+    public void setDodgeCooldownTicks(int ticks) { this.dodgeCooldownTicks = Math.max(0, ticks); }
 
     // ── Left Column Settings ────────────────────────────────────────────
     private boolean postEndWorld = false;
