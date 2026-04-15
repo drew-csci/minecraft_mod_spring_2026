@@ -6,6 +6,7 @@ import com.example.worldsettings.listeners.CraftingListener;
 import com.example.worldsettings.listeners.EntityDeathListener;
 import com.example.worldsettings.listeners.FurnaceListener;
 import com.example.worldsettings.listeners.GUIClickListener;
+import com.example.worldsettings.listeners.DragonEggDestructionListener;
 import com.example.worldsettings.listeners.WorldSettingsGameplayListener;
 import com.example.worldsettings.settings.WorldSettings;
 import com.example.worldsettings.sidebar.PlayerJoinListener;
@@ -36,6 +37,9 @@ public class WorldSettingsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WorldSettingsGameplayListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerAdvancementListener(), this);
+
+        // Register the dragon egg destruction listener (for Void Devourer boss spawn)
+        getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
 
         getLogger().info("========================================");
         getLogger().info(" WorldSettingsPlugin v1.0.0 enabled!");
