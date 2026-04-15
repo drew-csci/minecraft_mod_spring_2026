@@ -4,9 +4,6 @@ import org.bukkit.Material;
 
 import com.example.worldsettings.ModdedItems;
 import com.example.worldsettings.gui.SettingsGUI;
-<<<<<<< HEAD
-=======
->>>>>>> origin/your_logan_kleva_branch_1
 
 import com.example.worldsettings.listeners.CraftingListener;
 import com.example.worldsettings.listeners.EntityDeathListener;

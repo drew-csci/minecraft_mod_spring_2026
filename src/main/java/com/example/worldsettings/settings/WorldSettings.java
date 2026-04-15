@@ -6,7 +6,7 @@ package com.example.worldsettings.settings;
  */
 public class WorldSettings {
 
-    // ── Mob Ability Settings (Dodge) ─────────────────────────────
+git merge origin/main    // ── Mob Ability Settings (Dodge) ─────────────────────────────
     private boolean enhancedMobDodgeEnabled = true;
     private int dodgeChancePercent = 20; // default 20%
     private int dodgeCooldownTicks = 40; // default 2 seconds (40 ticks)
