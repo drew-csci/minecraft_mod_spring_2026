@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.example.worldsettings.integration.CrimsonDescentIntegrationTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.208 s -- in com.example.worldsettings.integration.CrimsonDescentIntegrationTest

@@ -26,7 +26,7 @@ import java.util.List;
  *   Row 4: [slot 36-39] Left Item 4   |  divider  |  [slot 41-44]  Right Item 4
  *   Row 5: [slot 45-48] Left Item 5   |  divider  |  [slot 50-53]  Right Item 5
  *
- * Each setting occupies one clickable slot per row (left col + right col).
+ * Each setting occupies one clickable slot grouped by config section.
  */
 public class SettingsGUI {
 
@@ -39,6 +39,7 @@ public class SettingsGUI {
     public static final int SLOT_NEW_BOSS              = 28;
     public static final int SLOT_HORDE_EVENTS          = 37;
     public static final int SLOT_MAX_HORDE_SIZE        = 46;
+    public static final int SLOT_ENHANCED_MOBS         = 47;
 
     // Slot positions for right-column items (rows 1-5, column 7)
     public static final int SLOT_DIFFICULTY_LEVEL      = 14;
@@ -46,6 +47,7 @@ public class SettingsGUI {
     public static final int SLOT_BLOOD_MOON_SPAWN      = 32;
     public static final int SLOT_FIRST_BLOOD_MOON      = 41;
     public static final int SLOT_BLOOD_MOON_CHANCE     = 50;
+    public static final int SLOT_ENHANCED_LOOT         = 51;
 
     /**
      * Opens the settings menu for a player.
@@ -64,8 +66,8 @@ public class SettingsGUI {
         gui.setItem(4, createItem(Material.NETHER_STAR,
             ChatColor.GOLD + "" + ChatColor.BOLD + "World Settings",
             Arrays.asList(
-                ChatColor.GRAY + "Basic Settings",
-                ChatColor.DARK_GRAY + "Click items to toggle"
+                ChatColor.GRAY + "Sections: Post-End World and Blood Moon",
+                ChatColor.DARK_GRAY + "Left-click increase | Right-click decrease"
             )));
 
         // ── Center column divider (column 4, slots 4/13/22/31/40/49) ───
@@ -117,6 +119,10 @@ public class SettingsGUI {
                 "",
                 ChatColor.DARK_GRAY + "Left-click: +10  |  Right-click: -10"
             )));
+
+        gui.setItem(SLOT_ENHANCED_MOBS, createToggleItem(
+            "Enhanced Mobs", s.isEnhancedMobs(),
+            Material.BLAZE_ROD, Material.STICK));
 
         // ── RIGHT COLUMN ────────────────────────────────────────────────
 
@@ -173,6 +179,10 @@ public class SettingsGUI {
                 "",
                 ChatColor.DARK_GRAY + "Left-click: +5%  |  Right-click: -5%"
             )));
+
+        gui.setItem(SLOT_ENHANCED_LOOT, createToggleItem(
+            "Enhanced Loot Drops", s.isEnhancedLootDrops(),
+            Material.EMERALD, Material.FLINT));
 
         player.openInventory(gui);
     }
