@@ -46,7 +46,7 @@ public final class HellSpider {
 
         AttributeInstance speed = spider.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         if (speed != null) {
-            speed.setBaseValue(0.4); // Super fast
+            speed.setBaseValue(0.6); // Super fast (increased from 0.4)
         }
 
         AttributeInstance damage = spider.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
