@@ -37,6 +37,11 @@ public class WorldSettingsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WorldSettingsGameplayListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerAdvancementListener(), this);
+        getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellCreeperListener(), this);
+        getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellZombieListener(), this);
+        getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellSpiderListener(), this);
+        getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellEndermanListener(), this);
+        getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellSkeletonListener(), this);
 
         // Register the dragon egg destruction listener (for Void Devourer boss spawn)
         getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
