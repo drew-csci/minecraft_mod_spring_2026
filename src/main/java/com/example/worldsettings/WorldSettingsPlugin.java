@@ -40,11 +40,16 @@ public class WorldSettingsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellCreeperListener(), this);
         getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellZombieListener(), this);
         getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellSpiderListener(), this);
+        getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellPhantomListener(), this);
         getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellEndermanListener(), this);
         getServer().getPluginManager().registerEvents(new com.example.worldsettings.listeners.HellSkeletonListener(), this);
 
         // Register the dragon egg destruction listener (for Void Devourer boss spawn)
         getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
+        
+        // Start Crimson Descent event manager and day tracker display
+        new com.example.worldsettings.listeners.CrimsonDescentManager(this);
+        com.example.worldsettings.listeners.DayTrackerListener.startDayTrackerTask(this);
 
         getLogger().info("========================================");
         getLogger().info(" WorldSettingsPlugin v1.0.0 enabled!");
@@ -97,6 +102,27 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
             getLogger().info("[Progression] " + player.getName() + ": " + completed + "/" + total + " (" + percent + "%)");
 
+            return true;
+        }
+
+        if (command.getName().equalsIgnoreCase("crimson")) {
+            if (!sender.hasPermission("worldsettings.crimson")) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to trigger the Crimson Descent.");
+                return true;
+            }
+            
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("Only players can use this command.");
+                return true;
+            }
+            
+            Player player = (Player) sender;
+            // Manually trigger the Crimson Descent in the player's world
+            // Find or create the CrimsonDescentManager and trigger it
+            com.example.worldsettings.listeners.CrimsonDescentManager manager = 
+                new com.example.worldsettings.listeners.CrimsonDescentManager(this);
+            manager.manualTrigger(player.getWorld());
+            player.sendMessage(ChatColor.DARK_RED + "The Crimson Descent has been triggered!");
             return true;
         }
 

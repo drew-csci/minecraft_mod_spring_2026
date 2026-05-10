@@ -37,8 +37,8 @@ public class HellSpiderListener implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             
-            // Send player flying in the sky
-            Vector velocity = new Vector(0, 3.0, 0); // Strong upward velocity
+            // Send player flying above the clouds
+            Vector velocity = new Vector(0, 6.0, 0); // Extreme upward velocity to reach clouds
             player.setVelocity(velocity);
             
             // Play a Minecraft music disc sound

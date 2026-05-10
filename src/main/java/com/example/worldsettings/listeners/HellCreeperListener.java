@@ -3,6 +3,8 @@ package com.example.worldsettings.listeners;
 import com.example.worldsettings.mobs.HellCreeper;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Creeper;
@@ -35,8 +37,10 @@ public class HellCreeperListener implements Listener {
 
         event.setCancelled(true);
         Location center = event.getLocation();
+        center.getWorld().playSound(center, Sound.MUSIC_DISC_BLOCKS, SoundCategory.HOSTILE, 2.0f, 1.0f);
         center.getWorld().createExplosion(center, HellCreeper.EXPLOSION_POWER, true, true);
-        leaveFireTrail(center, 5);
+        leaveFireTrail(center, 10);
+        spreadFire(center, 15);
     }
 
     private void leaveFireTrail(Location center, int radius) {
@@ -48,6 +52,21 @@ public class HellCreeperListener implements Listener {
                 Block below = block.getRelative(BlockFace.DOWN);
                 if (block.getType() == Material.AIR && below.getType().isSolid()) {
                     block.setType(Material.FIRE);
+                }
+            }
+        }
+    }
+
+    private void spreadFire(Location center, int radius) {
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -5; y <= 5; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    if (Math.abs(x) + Math.abs(z) > radius) continue;
+                    Location target = center.clone().add(x, y, z);
+                    Block block = target.getBlock();
+                    if (block.getType().isBurnable()) {
+                        block.setType(Material.FIRE);
+                    }
                 }
             }
         }
