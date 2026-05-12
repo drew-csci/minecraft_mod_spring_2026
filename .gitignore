@@ -1,49 +1,73 @@
-# Maven / Java
+#################################################
+# Build output (Maven / Gradle)
+#################################################
 target/
+build/
+out/
+
 *.class
 *.jar
 *.war
 *.ear
 
-# IntelliJ
+#################################################
+# Maven
+#################################################
+.mvn/
+mvnw
+mvnw.cmd
+dependency-reduced-pom.xml
+
+#################################################
+# IntelliJ IDEA
+#################################################
 .idea/
 *.iml
-out/
+*.iws
+*.ipr
 
+#################################################
 # VS Code
+#################################################
 .vscode/
 
+#################################################
 # Eclipse
-.project
+#################################################
 .classpath
+.project
 .settings/
 bin/
 
+#################################################
 # OS files
+#################################################
 .DS_Store
 Thumbs.db
 
-# Python
-__pycache__/
-*.pyc
-.venv/
-venv/
-
-# Minecraft server/runtime files
-server/
-logs/
+#################################################
+# Minecraft server runtime files
+# (IMPORTANT - DO NOT COMMIT THESE)
+#################################################
 world/
 world_nether/
 world_the_end/
+
+logs/
+plugins/
 cache/
 
+#################################################
 # Minecraft generated files
+#################################################
 *.log
 *.mca
 *.dat
 *.gz
 
-# Server config/runtime
+#################################################
+# Server configuration files (runtime only)
+#################################################
 eula.txt
 server.properties
 banned-ips.json
@@ -58,5 +82,8 @@ paper.yml
 paper-global.yml
 paper-world-defaults.yml
 
-# Plugins/build artifacts
-plugins/
+#################################################
+# Paper / server versions folder
+#################################################
+versions/
+libraries/
