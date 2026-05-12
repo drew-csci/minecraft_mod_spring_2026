@@ -1,15 +1,6 @@
 package com.example.worldsettings;
 
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.plugin.java.JavaPlugin;
-
+import com.example.worldsettings.progression.ProgressionManager;
 import com.example.worldsettings.gui.SettingsGUI;
 import com.example.worldsettings.listeners.CraftingListener;
 import com.example.worldsettings.listeners.DragonEggDestructionListener;
@@ -25,27 +16,50 @@ import com.example.worldsettings.listeners.PlayerInteractListener;
 import com.example.worldsettings.listeners.PlayerMovementListener;
 import com.example.worldsettings.listeners.PostEndListener;
 import com.example.worldsettings.listeners.ProjectileListener;
+import com.example.worldsettings.listeners.WorldSettingsGameplayListener;
 import com.example.worldsettings.settings.WorldSettings;
+import com.example.worldsettings.sidebar.PlayerJoinListener;
+import com.example.worldsettings.sidebar.PlayerAdvancementListener;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 
-/**
- * WorldSettingsPlugin - Main entry point.
- * Provides a GUI-based world settings menu accessible via /worldsettings.
- */
 public class WorldSettingsPlugin extends JavaPlugin {
 
     private static WorldSettingsPlugin instance;
     private WorldSettings worldSettings;
+    private ProgressionManager progressionManager;
 
     @Override
     public void onEnable() {
         instance = this;
         worldSettings = new WorldSettings();
+        progressionManager = new ProgressionManager();
 
-        // Register the GUI click listener
+        saveDefaultConfig();
+        reloadSettingsFromConfig();
+
+        // Register listeners
         getServer().getPluginManager().registerEvents(new GUIClickListener(), this);
-        // Register the post-end listener (dragon death activation + mob enhancements)
+        getServer().getPluginManager().registerEvents(new WorldSettingsGameplayListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerAdvancementListener(), this);
+        getServer().getPluginManager().registerEvents(new HellCreeperListener(), this);
+        getServer().getPluginManager().registerEvents(new HellZombieListener(), this);
+        getServer().getPluginManager().registerEvents(new HellSpiderListener(), this);
+        getServer().getPluginManager().registerEvents(new HellEndermanListener(), this);
+        getServer().getPluginManager().registerEvents(new HellSkeletonListener(), this);
+
+        // Register the post-end listener (dragon death activation)
         getServer().getPluginManager().registerEvents(new PostEndListener(), this);
-        // Start Crimson Descent manager which handles the nightly randomized event
+        // Start Crimson Descent manager (nightly randomized event)
         new com.example.worldsettings.listeners.CrimsonDescentManager(this);
 
         // Register the entity death listener for custom drops
@@ -66,12 +80,7 @@ public class WorldSettingsPlugin extends JavaPlugin {
         // Register the furnace listener for Purifying Furnace
         getServer().getPluginManager().registerEvents(new FurnaceListener(), this);
 
-        // Register Hell mob listeners (spawn conversion + abilities)
-        getServer().getPluginManager().registerEvents(new HellZombieListener(), this);
-        getServer().getPluginManager().registerEvents(new HellCreeperListener(), this);
-        getServer().getPluginManager().registerEvents(new HellSkeletonListener(), this);
-        getServer().getPluginManager().registerEvents(new HellSpiderListener(), this);
-        getServer().getPluginManager().registerEvents(new HellEndermanListener(), this);
+        // Register the dragon egg destruction listener (for Void Devourer boss spawn)
         getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
 
         // Register custom recipes
@@ -81,6 +90,82 @@ public class WorldSettingsPlugin extends JavaPlugin {
         getLogger().info(" WorldSettingsPlugin v1.0.0 enabled!");
         getLogger().info(" Use /worldsettings to open the GUI.");
         getLogger().info("========================================");
+    }
+
+    @Override
+    public void onDisable() {
+        getLogger().info("WorldSettingsPlugin disabled.");
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (command.getName().equalsIgnoreCase("worldsettings")) {
+            if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+                if (!sender.hasPermission("worldsettings.reload")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to reload settings.");
+                    return true;
+                }
+                reloadConfig();
+                reloadSettingsFromConfig();
+                sender.sendMessage(ChatColor.GREEN + "World settings config reloaded.");
+                return true;
+            }
+
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("Only players can use this command.");
+                return true;
+            }
+            Player player = (Player) sender;
+            SettingsGUI.openMainMenu(player);
+            return true;
+        }
+
+        if (command.getName().equalsIgnoreCase("progression")) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage("Only players can use this command.");
+                return true;
+            }
+
+            int completed = progressionManager.getCompletedAdvancementCount(player);
+            int total = progressionManager.getTotalTrackedAdvancements();
+            int percent = progressionManager.getProgressionPercent(player);
+            String rank = progressionManager.getDifficultyLabel(percent);
+
+            player.sendMessage("§aProgression: §e" + completed + "/" + total + " §7(" + percent + "%)");
+            player.sendMessage("§aRank: " + rank);
+
+            getLogger().info("[Progression] " + player.getName() + ": " + completed + "/" + total + " (" + percent + "%)");
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static WorldSettingsPlugin getInstance() {
+        return instance;
+    }
+
+    public WorldSettings getWorldSettings() {
+        return worldSettings;
+    }
+
+    public ProgressionManager getProgressionManager() {
+        return progressionManager;
+    }
+
+    public void reloadSettingsFromConfig() {
+        worldSettings.loadFromConfig(getConfig());
+        worldSettings.sanitizeRanges();
+        worldSettings.writeToConfig(getConfig());
+        saveConfig();
+    }
+
+    public void saveSettingsToConfig() {
+        worldSettings.sanitizeRanges();
+        worldSettings.writeToConfig(getConfig());
+        saveConfig();
     }
 
     private void registerRecipes() {
@@ -124,7 +209,7 @@ public class WorldSettingsPlugin extends JavaPlugin {
         explodingArrowRecipe.setIngredient('A', Material.ARROW);
         getServer().addRecipe(explodingArrowRecipe);
 
-        // Copper Staff recipe: top mid Explosive Charge, mid mid Lightning Rod, bottom mid Lightning Rod
+        // Copper Staff recipe
         NamespacedKey copperStaffKey = new NamespacedKey(this, "copper_staff");
         ShapedRecipe copperStaffRecipe = new ShapedRecipe(copperStaffKey, ModdedItems.createCopperStaff());
         copperStaffRecipe.shape(" E ", " S ", " R ");
@@ -133,7 +218,7 @@ public class WorldSettingsPlugin extends JavaPlugin {
         copperStaffRecipe.setIngredient('R', Material.LIGHTNING_ROD);
         getServer().addRecipe(copperStaffRecipe);
 
-        // Purifying Furnace recipe: Furnace + Purifying Powder (1x2 vertical)
+        // Purifying Furnace recipe: Furnace + Purifying Powder
         NamespacedKey purifyingFurnaceKey = new NamespacedKey(this, "purifying_furnace");
         ShapedRecipe purifyingFurnaceRecipe = new ShapedRecipe(purifyingFurnaceKey, ModdedItems.createPurifyingFurnace());
         purifyingFurnaceRecipe.shape("P", "F");
@@ -141,42 +226,14 @@ public class WorldSettingsPlugin extends JavaPlugin {
         purifyingFurnaceRecipe.setIngredient('F', Material.FURNACE);
         getServer().addRecipe(purifyingFurnaceRecipe);
 
-        // Upgrade Template duplication recipe (1 template + 1 Blood Orb + 7 diamonds -> 2 templates)
+        // Upgrade Template duplication recipe
         ItemStack twoTemplates = ModdedItems.createUpgradeTemplate();
         twoTemplates.setAmount(2);
         NamespacedKey templateDuplicateKey = new NamespacedKey(this, "upgrade_template_duplicate");
         ShapedRecipe templateDuplicateRecipe = new ShapedRecipe(templateDuplicateKey, twoTemplates);
-        templateDuplicateRecipe.shape("DDD", "TBT", "DDD");
+        templateDuplicateRecipe.shape("DDD", "DTD", "DDD");
         templateDuplicateRecipe.setIngredient('D', Material.DIAMOND);
         templateDuplicateRecipe.setIngredient('T', new RecipeChoice.ExactChoice(ModdedItems.createUpgradeTemplate()));
-        templateDuplicateRecipe.setIngredient('B', new RecipeChoice.ExactChoice(ModdedItems.createBloodOrb()));
         getServer().addRecipe(templateDuplicateRecipe);
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("WorldSettingsPlugin disabled.");
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("worldsettings")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("Only players can use this command.");
-                return true;
-            }
-            Player player = (Player) sender;
-            SettingsGUI.openMainMenu(player);
-            return true;
-        }
-        return false;
-    }
-
-    public static WorldSettingsPlugin getInstance() {
-        return instance;
-    }
-
-    public WorldSettings getWorldSettings() {
-        return worldSettings;
     }
 }

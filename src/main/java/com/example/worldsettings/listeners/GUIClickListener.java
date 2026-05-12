@@ -59,6 +59,11 @@ public class GUIClickListener implements Listener {
                 notifyValue(player, "Max Horde Size", String.valueOf(settings.getMaximumHordeSize()));
                 break;
 
+            case SettingsGUI.SLOT_ENHANCED_MOBS:
+                settings.toggleEnhancedMobs();
+                notify(player, "Enhanced Mobs", settings.isEnhancedMobs());
+                break;
+
             // ── Right Column ────────────────────────────────────────────
             case SettingsGUI.SLOT_DIFFICULTY_LEVEL:
                 settings.cycleDifficulty();
@@ -87,9 +92,16 @@ public class GUIClickListener implements Listener {
                 notifyValue(player, "Blood Moon Chance", settings.getBloodMoonChancePercent() + "%");
                 break;
 
+            case SettingsGUI.SLOT_ENHANCED_LOOT:
+                settings.toggleEnhancedLootDrops();
+                notify(player, "Enhanced Loot Drops", settings.isEnhancedLootDrops());
+                break;
+
             default:
                 return; // Clicked filler — do nothing, no sound
         }
+
+        WorldSettingsPlugin.getInstance().saveSettingsToConfig();
 
         // Refresh the GUI to show updated values
         SettingsGUI.openMainMenu(player);
