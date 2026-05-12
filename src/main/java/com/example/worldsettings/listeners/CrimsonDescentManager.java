@@ -57,6 +57,9 @@ public class CrimsonDescentManager {
     private final Map<UUID, Boolean> prevStorm = new HashMap<>();
     private final Map<UUID, Boolean> prevThundering = new HashMap<>();
     private final Map<UUID, Integer> prevWeatherDuration = new HashMap<>();
+    private final Map<UUID, BossBar> activeBossBars = new HashMap<>();
+    private final Map<UUID, BukkitRunnable> activeTasks = new HashMap<>();
+    private final Set<UUID> activeWorlds = new HashSet<>();
 
     // Candidate hostile mobs for spawning (Overworld-safe)
     private static final EntityType[] MOB_TYPES = new EntityType[] {
@@ -86,6 +89,10 @@ public class CrimsonDescentManager {
             if (world.getEnvironment() != World.Environment.NORMAL) continue; // only overworld
 
             UUID wid = world.getUID();
+            if (activeWorlds.contains(wid)) {
+                lastWasNight.put(wid, isNightTime(world.getTime()));
+                continue;
+            }
             boolean isNight = isNightTime(world.getTime());
             boolean prev = lastWasNight.getOrDefault(wid, false);
 
@@ -145,7 +152,69 @@ public class CrimsonDescentManager {
         return roll >= 1 && roll <= chance;
     }
 
+    public boolean startNow(World world) {
+        if (world == null || world.getEnvironment() != World.Environment.NORMAL) {
+            return false;
+        }
+
+        UUID wid = world.getUID();
+        stopEvent(world);
+        daysSinceLast.put(wid, 0);
+        currentChance.put(
+            wid,
+            WorldSettingsPlugin.getInstance().getWorldSettings().getCrimsonBaseChancePercent()
+        );
+        lastWasNight.put(wid, isNightTime(world.getTime()));
+        startCrimsonDescent(world);
+        return true;
+    }
+
+    public boolean stopEvent(World world) {
+        if (world == null || world.getEnvironment() != World.Environment.NORMAL) {
+            return false;
+        }
+
+        UUID wid = world.getUID();
+        boolean wasActive = activeWorlds.remove(wid);
+
+        BukkitRunnable task = activeTasks.remove(wid);
+        if (task != null) {
+            task.cancel();
+        }
+
+        BossBar bossBar = activeBossBars.remove(wid);
+        if (bossBar != null) {
+            bossBar.removeAll();
+            bossBar.setVisible(false);
+        }
+
+        Boolean storm = prevStorm.remove(wid);
+        Boolean thundering = prevThundering.remove(wid);
+        Integer weatherDuration = prevWeatherDuration.remove(wid);
+        if (storm != null) {
+            world.setStorm(storm);
+        }
+        if (thundering != null) {
+            world.setThundering(thundering);
+        }
+        if (weatherDuration != null) {
+            world.setWeatherDuration(weatherDuration);
+        }
+
+        return wasActive || task != null || bossBar != null;
+    }
+
+    public void stopAllEvents() {
+        for (World world : plugin.getServer().getWorlds()) {
+            if (world.getEnvironment() == World.Environment.NORMAL) {
+                stopEvent(world);
+            }
+        }
+    }
+
     private void startCrimsonDescent(World world) {
+        stopEvent(world);
+
         // Choose a single mob type for the entire event
         EntityType chosen = MOB_TYPES[rng.nextInt(MOB_TYPES.length)];
 
@@ -161,10 +230,12 @@ public class CrimsonDescentManager {
         world.setStorm(true);
         world.setThundering(true);
         world.setWeatherDuration(durationTicks);
+        activeWorlds.add(wid);
 
         // Create a red boss bar visible to players
         final org.bukkit.boss.BossBar boss = plugin.getServer().createBossBar(title, BarColor.RED, BarStyle.SOLID);
         boss.setVisible(true);
+        activeBossBars.put(wid, boss);
 
         // For each player in the world, give feedback and spawn mobs
         for (Player player : world.getPlayers()) {
@@ -178,21 +249,13 @@ public class CrimsonDescentManager {
 
         // Spawn red sky particles periodically and remove effects after duration
         final DustOptions dust = new DustOptions(Color.fromRGB(200, 20, 20), 1.5f);
-        new BukkitRunnable() {
+        BukkitRunnable task = new BukkitRunnable() {
             int ticksLeft = durationTicks;
 
             @Override
             public void run() {
                 if (ticksLeft <= 0) {
-                    // cleanup: restore weather and remove bossbar
-                    boss.removeAll();
-                    boss.setVisible(false);
-                    Boolean s = prevStorm.remove(wid);
-                    Boolean t = prevThundering.remove(wid);
-                    Integer dur = prevWeatherDuration.remove(wid);
-                    if (s != null) world.setStorm(s);
-                    if (t != null) world.setThundering(t);
-                    if (dur != null) world.setWeatherDuration(dur);
+                    stopEvent(world);
                     cancel();
                     return;
                 }
@@ -207,7 +270,9 @@ public class CrimsonDescentManager {
 
                 ticksLeft -= 20; // we run every 20 ticks
             }
-        }.runTaskTimer(plugin, 0L, 20L);
+        };
+        task.runTaskTimer(plugin, 0L, 20L);
+        activeTasks.put(wid, task);
     }
 
     private void spawnMobsAroundPlayer(World world, Player player, EntityType type, int count) {
