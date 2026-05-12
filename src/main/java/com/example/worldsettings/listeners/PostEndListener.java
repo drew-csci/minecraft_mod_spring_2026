@@ -3,9 +3,17 @@ package com.example.worldsettings.listeners;
 import com.example.worldsettings.WorldSettingsPlugin;
 import com.example.worldsettings.settings.WorldSettings;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -15,6 +23,11 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Listener that activates a "post-end" phase when a player kills the Ender Dragon.
@@ -31,6 +44,139 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class PostEndListener implements Listener {
 
+    private final WorldSettingsPlugin plugin;
+    private final Map<UUID, Boolean> prevStorm = new HashMap<>();
+    private final Map<UUID, Boolean> prevThundering = new HashMap<>();
+    private final Map<UUID, Integer> prevWeatherDuration = new HashMap<>();
+    private final Map<UUID, BossBar> bossBars = new HashMap<>();
+    private final Map<UUID, BukkitRunnable> particleTasks = new HashMap<>();
+
+    public PostEndListener(WorldSettingsPlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    public boolean activatePostEnd(World world, Player announcer) {
+        if (world == null || world.getEnvironment() != World.Environment.NORMAL) {
+            return false;
+        }
+
+        WorldSettings ws = WorldSettingsPlugin.getInstance().getWorldSettings();
+        ws.setPostEndWorld(true);
+        ws.setEnhancedMobs(true);
+
+        UUID worldId = world.getUID();
+        if (!bossBars.containsKey(worldId)) {
+            prevStorm.put(worldId, world.hasStorm());
+            prevThundering.put(worldId, world.isThundering());
+            prevWeatherDuration.put(worldId, world.getWeatherDuration());
+        }
+
+        world.setStorm(true);
+        world.setThundering(true);
+        world.setWeatherDuration(Integer.MAX_VALUE);
+
+        BossBar bossBar = bossBars.computeIfAbsent(
+            worldId,
+            ignored -> plugin.getServer().createBossBar(
+                ChatColor.DARK_RED + "Post-End Phase",
+                BarColor.RED,
+                BarStyle.SOLID
+            )
+        );
+        bossBar.setVisible(true);
+        for (Player player : world.getPlayers()) {
+            bossBar.addPlayer(player);
+            player.sendMessage(ChatColor.GOLD + "Post-End phase activated! " + ChatColor.WHITE + "Mobs are stronger and the sky has turned red.");
+            try {
+                player.sendTitle(ChatColor.DARK_RED + "Post-End Phase", ChatColor.YELLOW + "The world has changed.", 10, 70, 20);
+            } catch (NoSuchMethodError ignored) {
+            }
+            player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1.0f, 1.0f);
+        }
+
+        BukkitRunnable previousTask = particleTasks.remove(worldId);
+        if (previousTask != null) {
+            previousTask.cancel();
+        }
+
+        final Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(180, 35, 35), 1.5f);
+        BukkitRunnable task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!ws.isPostEndWorld()) {
+                    cancel();
+                    return;
+                }
+
+                for (Player player : world.getPlayers()) {
+                    if (!bossBar.getPlayers().contains(player)) {
+                        bossBar.addPlayer(player);
+                    }
+
+                    Location loc = player.getLocation().clone();
+                    loc.setY(Math.min(loc.getY() + 60.0, world.getMaxHeight() - 1));
+                    world.spawnParticle(Particle.REDSTONE, loc, 30, 5.0, 5.0, 5.0, dust);
+                }
+            }
+        };
+        task.runTaskTimer(plugin, 0L, 20L);
+        particleTasks.put(worldId, task);
+
+        if (announcer != null && announcer.getWorld().equals(world)) {
+            announcer.sendMessage(ChatColor.GOLD + "Post-End phase activated! " + ChatColor.WHITE + "Mobs will be stronger.");
+        }
+
+        return true;
+    }
+
+    public boolean deactivatePostEnd(World world) {
+        if (world == null || world.getEnvironment() != World.Environment.NORMAL) {
+            return false;
+        }
+
+        WorldSettings ws = WorldSettingsPlugin.getInstance().getWorldSettings();
+        ws.setPostEndWorld(false);
+        ws.setEnhancedMobs(false);
+
+        UUID worldId = world.getUID();
+        BukkitRunnable task = particleTasks.remove(worldId);
+        if (task != null) {
+            task.cancel();
+        }
+
+        BossBar bossBar = bossBars.remove(worldId);
+        if (bossBar != null) {
+            bossBar.removeAll();
+            bossBar.setVisible(false);
+        }
+
+        Boolean storm = prevStorm.remove(worldId);
+        Boolean thundering = prevThundering.remove(worldId);
+        Integer weatherDuration = prevWeatherDuration.remove(worldId);
+        if (storm != null) {
+            world.setStorm(storm);
+        }
+        if (thundering != null) {
+            world.setThundering(thundering);
+        }
+        if (weatherDuration != null) {
+            world.setWeatherDuration(weatherDuration);
+        }
+
+        for (Player player : world.getPlayers()) {
+            player.sendMessage(ChatColor.GRAY + "Post-End phase has ended.");
+        }
+        return true;
+    }
+
+    public void deactivateAll() {
+        for (World world : plugin.getServer().getWorlds()) {
+            if (world.getEnvironment() == World.Environment.NORMAL) {
+                deactivatePostEnd(world);
+            }
+        }
+    }
+
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (event.getEntityType() != EntityType.ENDER_DRAGON) return;
@@ -41,15 +187,8 @@ public class PostEndListener implements Listener {
         WorldSettings ws = WorldSettingsPlugin.getInstance().getWorldSettings();
         // Activate post-end phase if not already active
         if (!ws.isPostEndWorld()) {
-            ws.setPostEndWorld(true);
-            killer.sendMessage(ChatColor.GOLD + "Post-End phase activated! "+ChatColor.WHITE+"Mobs will be stronger.");
-            // Send a prominent title and play a sound for feedback
-            try {
-                killer.sendTitle(ChatColor.DARK_RED + "Post-End Phase", ChatColor.YELLOW + "Mobs have been empowered!", 10, 70, 20);
-            } catch (NoSuchMethodError ignored) {
-                // Older server APIs may not have sendTitle overloads; ignore if absent
-            }
-            killer.playSound(killer.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1.0f, 1.0f);
+            activatePostEnd(killer.getWorld(), killer);
+            WorldSettingsPlugin.getInstance().saveSettingsToConfig();
         }
     }
 

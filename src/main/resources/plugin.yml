@@ -7,8 +7,8 @@ author: Developer
 
 commands:
   worldsettings:
-    description: Opens the World Settings GUI or reloads config
-    usage: /worldsettings [reload]
+    description: Opens the World Settings GUI or manages world phases
+    usage: /worldsettings [reload|postend <start|stop>|crimsondescent <start|stop>|stopall]
     permission: worldsettings.use
 
   progression:

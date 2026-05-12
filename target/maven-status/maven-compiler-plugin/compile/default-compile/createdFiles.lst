@@ -40,6 +40,7 @@ com\example\worldsettings\listeners\WorldSettingsGameplayListener.class
 com\example\worldsettings\listeners\PostEndListener.class
 com\example\worldsettings\listeners\HellZombieListener$1.class
 com\example\worldsettings\listeners\PlayerMovementListener.class
+com\example\worldsettings\listeners\PostEndListener$1.class
 com\example\worldsettings\progression\ProgressionManager.class
 com\example\worldsettings\settings\WorldSettings$DifficultyLevel.class
 com\example\worldsettings\listeners\HellSpiderListener.class
