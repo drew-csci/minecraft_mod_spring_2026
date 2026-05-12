@@ -132,6 +132,20 @@ public class WorldSettings {
     public boolean isEnhancedLootDrops()         { return enhancedLootDrops; }
     public void toggleEnhancedLootDrops()        { enhancedLootDrops = !enhancedLootDrops; }
 
+    // ── Mob Dodge Settings ───────────────────────────────────────────────
+    private boolean enhancedMobDodgeEnabled = true;
+    private int dodgeCooldownTicks = 40; // 2 seconds
+    private int dodgeChancePercent = 20; // 20% dodge chance
+
+    public boolean isEnhancedMobDodgeEnabled()   { return enhancedMobDodgeEnabled; }
+    public void setEnhancedMobDodgeEnabled(boolean v) { enhancedMobDodgeEnabled = v; }
+
+    public int getDodgeCooldownTicks()            { return dodgeCooldownTicks; }
+    public void setDodgeCooldownTicks(int t)      { dodgeCooldownTicks = Math.max(0, t); }
+
+    public int getDodgeChancePercent()            { return dodgeChancePercent; }
+    public void setDodgeChancePercent(int p)      { dodgeChancePercent = Math.max(0, Math.min(100, p)); }
+
     // Crimson Descent accessors
     public boolean isCrimsonDescentEnabled()     { return crimsonDescentEnabled; }
     public void setCrimsonDescentEnabled(boolean v) { crimsonDescentEnabled = v; }

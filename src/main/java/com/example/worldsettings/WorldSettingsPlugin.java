@@ -1,31 +1,31 @@
 package com.example.worldsettings;
 
 import org.bukkit.Material;
-
-import com.example.worldsettings.ModdedItems;
-import com.example.worldsettings.gui.SettingsGUI;
-<<<<<<< HEAD
-=======
->>>>>>> origin/your_logan_kleva_branch_1
-
-import com.example.worldsettings.listeners.CraftingListener;
-import com.example.worldsettings.listeners.EntityDeathListener;
-import com.example.worldsettings.listeners.FurnaceListener;
-import com.example.worldsettings.listeners.GUIClickListener;
-import com.example.worldsettings.listeners.PostEndListener;
-import com.example.worldsettings.listeners.PlayerInteractListener;
-import com.example.worldsettings.listeners.PlayerMovementListener;
-import com.example.worldsettings.listeners.ProjectileListener;
-import com.example.worldsettings.settings.WorldSettings;
-
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.example.worldsettings.gui.SettingsGUI;
+import com.example.worldsettings.listeners.CraftingListener;
+import com.example.worldsettings.listeners.DragonEggDestructionListener;
+import com.example.worldsettings.listeners.EntityDeathListener;
+import com.example.worldsettings.listeners.FurnaceListener;
+import com.example.worldsettings.listeners.GUIClickListener;
+import com.example.worldsettings.listeners.HellCreeperListener;
+import com.example.worldsettings.listeners.HellEndermanListener;
+import com.example.worldsettings.listeners.HellSkeletonListener;
+import com.example.worldsettings.listeners.HellSpiderListener;
+import com.example.worldsettings.listeners.HellZombieListener;
+import com.example.worldsettings.listeners.PlayerInteractListener;
+import com.example.worldsettings.listeners.PlayerMovementListener;
+import com.example.worldsettings.listeners.PostEndListener;
+import com.example.worldsettings.listeners.ProjectileListener;
+import com.example.worldsettings.settings.WorldSettings;
 
 /**
  * WorldSettingsPlugin - Main entry point.
@@ -65,6 +65,14 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
         // Register the furnace listener for Purifying Furnace
         getServer().getPluginManager().registerEvents(new FurnaceListener(), this);
+
+        // Register Hell mob listeners (spawn conversion + abilities)
+        getServer().getPluginManager().registerEvents(new HellZombieListener(), this);
+        getServer().getPluginManager().registerEvents(new HellCreeperListener(), this);
+        getServer().getPluginManager().registerEvents(new HellSkeletonListener(), this);
+        getServer().getPluginManager().registerEvents(new HellSpiderListener(), this);
+        getServer().getPluginManager().registerEvents(new HellEndermanListener(), this);
+        getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
 
         // Register custom recipes
         registerRecipes();
