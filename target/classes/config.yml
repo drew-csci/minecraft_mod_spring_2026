@@ -1,0 +1,49 @@
+# ================================================
+# World Settings Plugin Configuration
+# This file is grouped by setting category to make
+# it easy to read and customize.
+# ================================================
+
+post_end_world:
+  # Enables post-end progression mechanics.
+  enabled: false
+
+  # Difficulty boost multiplier applied in post-end mode.
+  # Valid range: 1.0 to 3.0
+  difficulty_boost: 1.0
+
+  # Enables a new boss encounter.
+  new_boss: false
+
+  # Enables horde event mechanics.
+  horde_events: false
+
+  # Maximum horde size for horde events.
+  # Valid range: 10 to 100
+  maximum_horde_size: 50
+
+  # Enhances hostile mobs with buffs.
+  enhanced_mobs: false
+
+blood_moon:
+  # Enables blood moon events.
+  enabled: false
+
+  # Difficulty level for configured world systems.
+  # Valid values: EASY, MEDIUM, HARD
+  difficulty_level: EASY
+
+  # Spawn multiplier during blood moon events.
+  # Valid range: 25 to 500 (percent)
+  spawn_multiplier_percent: 100
+
+  # First blood moon day cycle.
+  # Valid values: 1, 3, 5
+  first_blood_moon_day: 3
+
+  # Chance for blood moon each night.
+  # Valid range: 0 to 100 (percent)
+  chance_percent_per_night: 10
+
+  # Adds bonus loot when blood moon systems are active.
+  enhanced_loot_drops: false

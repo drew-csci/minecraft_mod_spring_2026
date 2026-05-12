@@ -1,0 +1,211 @@
+[08:28:09] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[08:28:12] [ServerMain/INFO]: Loaded 7 recipes
+[08:28:12] [Server thread/INFO]: Starting minecraft server version 1.20.1
+[08:28:12] [Server thread/INFO]: Loading properties
+[08:28:12] [Server thread/INFO]: This server is running Paper version git-Paper-196 (MC: 1.20.1) (Implementing API version 1.20.1-R0.1-SNAPSHOT) (Git: 773dd72)
+[08:28:13] [Server thread/INFO]: Using 4 threads for Netty based IO
+[08:28:13] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[08:28:14] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948
+[08:28:14] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 3 worker threads, and gen parallelism of 3 threads
+[08:28:14] [Server thread/INFO]: Default game type: SURVIVAL
+[08:28:14] [Server thread/INFO]: Generating keypair
+[08:28:14] [Server thread/INFO]: Starting Minecraft server on *:25565
+[08:28:14] [Server thread/INFO]: Using default channel type
+[08:28:14] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[08:28:14] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[08:28:14] [Server thread/INFO]: [WorldSettingsPlugin] Loading server plugin WorldSettingsPlugin v1.0.0
+[08:28:14] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[08:28:14] [Server thread/INFO]: Preparing level "world"
+[08:28:15] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[08:28:16] [Server thread/INFO]: Time elapsed: 726 ms
+[08:28:16] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[08:28:16] [Server thread/INFO]: Time elapsed: 68 ms
+[08:28:16] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[08:28:16] [Server thread/INFO]: Time elapsed: 59 ms
+[08:28:16] [Server thread/INFO]: [WorldSettingsPlugin] Enabling WorldSettingsPlugin v1.0.0
+[08:28:16] [Server thread/INFO]: [WorldSettingsPlugin] ========================================
+[08:28:16] [Server thread/INFO]: [WorldSettingsPlugin]  WorldSettingsPlugin v1.0.0 enabled!
+[08:28:16] [Server thread/INFO]: [WorldSettingsPlugin]  Use /worldsettings to open the GUI.
+[08:28:16] [Server thread/INFO]: [WorldSettingsPlugin] ========================================
+[08:28:16] [Server thread/INFO]: Running delayed init tasks
+[08:28:16] [Server thread/INFO]: Done (4.148s)! For help, type "help"
+[08:28:16] [Server thread/INFO]: Timings Reset
+[08:28:20] [User Authenticator #0/INFO]: UUID of player Candeer45 is c71ac785-8541-462b-ac7f-605a04a2db14
+[08:28:20] [Server thread/INFO]: Candeer45 joined the game
+[08:28:20] [Server thread/INFO]: Candeer45[/127.0.0.1:1768] logged in with entity id 1041 at ([world]-303.7838530029383, 106.14065979900192, 241.40295804767752)
+[08:28:24] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 5084ms or 101 ticks behind
+[08:28:29] [Server thread/INFO]: Candeer45 issued server command: /time set day
+[08:28:29] [Server thread/INFO]: [Candeer45: Set the time to 1000]
+[08:28:33] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/2965, uuid='e1c1cb3e-f077-4905-890e-e7a1930c8651', l='ServerLevel[world]', x=-212.35, y=78.00, z=172.78, cpos=[-14, 10], tl=212, v=true] died: Hell Creeper went up in flames
+[08:28:36] [Server thread/INFO]: Candeer45 issued server command: /gamemode survival
+[08:28:36] [Server thread/INFO]: [Candeer45: Set own game mode to Survival Mode]
+[08:28:38] [Server thread/INFO]: Candeer45 fell from a high place
+[08:28:40] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/79, uuid='75f0816d-481f-46ee-b242-04c67f7b6afd', l='ServerLevel[world]', x=-122.45, y=59.00, z=-102.51, cpos=[-8, -7], tl=6558, v=true] died: Hell Zombie burned to death
+[08:28:44] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1114, uuid='7358eab5-120e-42c9-9d5a-95e011eb285f', l='ServerLevel[world]', x=-1.80, y=62.00, z=-2.14, cpos=[-1, -1], tl=4265, v=true] died: Hell Creeper was blown up by Hell Creeper
+[08:28:44] [Server thread/INFO]: Candeer45 was blown up by Hell Creeper
+[08:28:47] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/331, uuid='efb2f3f0-3475-4a83-99be-ec53e2ca51fe', l='ServerLevel[world]', x=-83.60, y=70.00, z=-23.50, cpos=[-6, -2], tl=4706, v=true] died: Hell Zombie burned to death
+[08:28:55] [Server thread/INFO]: Candeer45 was slain by Hell Zombie
+[08:28:55] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/2340, uuid='62eb815f-d3cd-40d2-be9f-c0784c2de15a', l='ServerLevel[world]', x=93.81, y=63.00, z=11.62, cpos=[5, 0], tl=4062, v=true] died: Hell Skeleton burned to death
+[08:28:56] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1113, uuid='65a432d6-2c1d-4548-bf40-7745f3ee5cbc', l='ServerLevel[world]', x=-1.31, y=64.00, z=-19.86, cpos=[-1, -2], tl=4010, v=true] died: Hell Zombie burned to death
+[08:28:56] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/148, uuid='b037d954-a944-43f8-8e61-3f59265c5665', l='ServerLevel[world]', x=-96.51, y=75.25, z=-90.74, cpos=[-7, -6], tl=3740, v=true] died: Hell Skeleton burned to death
+[08:28:56] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/1694, uuid='e36a134b-f7f5-45f4-a3c1-a5b9d74212cb', l='ServerLevel[world]', x=-76.56, y=99.00, z=50.57, cpos=[-5, 3], tl=4474, v=true] died: Hell Skeleton burned to death
+[08:28:57] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/718, uuid='1d09ab75-de12-42bd-a7b7-583f23f93530', l='ServerLevel[world]', x=-20.58, y=75.92, z=-101.35, cpos=[-2, -7], tl=4633, v=true] died: Hell Skeleton burned to death
+[08:29:00] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/449, uuid='5f786b90-2fb1-4258-a7ff-5f3cabb99b9a', l='ServerLevel[world]', x=-87.87, y=69.77, z=-28.49, cpos=[-6, -2], tl=4522, v=true] died: Hell Zombie burned to death
+[08:29:01] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/192, uuid='b54518af-3270-4429-8233-60b2ddad6de2', l='ServerLevel[world]', x=-106.89, y=66.00, z=-37.32, cpos=[-7, -3], tl=5111, v=true] died: Hell Zombie burned to death
+[08:29:02] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/3570, uuid='b4f296df-1e54-4aa9-b6ac-2e8dd5f4a1f7', l='ServerLevel[world]', x=69.30, y=7.95, z=83.23, cpos=[4, 5], tl=392, v=true] died: Hell Skeleton suffocated in a wall
+[08:29:05] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/136, uuid='2280b702-67a5-4370-b377-42dc757dd940', l='ServerLevel[world]', x=-93.25, y=72.00, z=-95.99, cpos=[-6, -6], tl=4821, v=true] died: Hell Zombie burned to death
+[08:29:05] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/142, uuid='50655d33-1e62-4b00-bbb7-0d5bc4a7ec68', l='ServerLevel[world]', x=-96.70, y=77.00, z=-95.30, cpos=[-7, -6], tl=6797, v=true] died: Hell Zombie burned to death
+[08:29:05] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1120, uuid='50551de2-c218-46b1-bd81-5e480c274199', l='ServerLevel[world]', x=-14.62, y=94.00, z=-121.51, cpos=[-1, -8], tl=4107, v=true] died: Hell Zombie burned to death
+[08:29:05] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/584, uuid='fc418059-bf90-4f99-8312-5a61063db834', l='ServerLevel[world]', x=-58.30, y=67.75, z=-24.48, cpos=[-4, -2], tl=2792, v=true] died: Hell Zombie burned to death
+[08:29:06] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/625, uuid='1dc9d630-c021-4cf6-9ee7-6cf9c278c7b7', l='ServerLevel[world]', x=-31.79, y=69.00, z=-48.00, cpos=[-2, -4], tl=5013, v=true] died: Hell Zombie burned to death
+[08:29:07] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/2419, uuid='5385d097-c350-4b3d-8c01-36f574cab32d', l='ServerLevel[world]', x=71.65, y=78.00, z=113.31, cpos=[4, 7], tl=4442, v=true] died: Hell Zombie burned to death
+[08:29:07] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/2256, uuid='fddb64d4-2157-4afd-af50-49eaa8cb6156', l='ServerLevel[world]', x=44.61, y=63.00, z=-90.92, cpos=[2, -6], tl=4509, v=true] died: Hell Skeleton burned to death
+[08:29:07] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/565, uuid='d75ddc1b-b95d-4730-afdb-5f001238c819', l='ServerLevel[world]', x=-58.70, y=68.00, z=-28.57, cpos=[-4, -2], tl=2621, v=true] died: Hell Zombie burned to death
+[08:29:07] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1690, uuid='cdb65fc7-6fcb-418f-8107-f4f3ce6e3dd5', l='ServerLevel[world]', x=-71.72, y=100.00, z=69.07, cpos=[-5, 4], tl=5023, v=true] died: Hell Zombie burned to death
+[08:29:08] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/844, uuid='3d80fd84-7358-4be8-8321-b495f4a43e69', l='ServerLevel[world]', x=-5.28, y=63.00, z=-45.49, cpos=[-1, -3], tl=4605, v=true] died: Hell Zombie burned to death
+[08:29:08] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/166, uuid='4bf91521-3534-4fd5-97da-e64b5ac2c4ce', l='ServerLevel[world]', x=-110.30, y=68.00, z=-56.69, cpos=[-7, -4], tl=2602, v=true] died: Hell Zombie burned to death
+[08:29:08] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1809, uuid='b18ad99b-77d9-447b-8667-c9a2d75ee2b7', l='ServerLevel[world]', x=-48.73, y=103.00, z=67.65, cpos=[-4, 4], tl=2744, v=true] died: Hell Zombie burned to death
+[08:29:08] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1670, uuid='0760f9ca-2883-409c-8b64-1a1704b86207', l='ServerLevel[world]', x=-105.62, y=106.00, z=111.63, cpos=[-7, 6], tl=2518, v=true] died: Hell Zombie burned to death
+[08:29:08] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1306, uuid='5b076c11-f670-4f2b-b574-a81532444454', l='ServerLevel[world]', x=-121.49, y=76.00, z=20.38, cpos=[-8, 1], tl=2643, v=true] died: Hell Zombie burned to death
+[08:29:08] [Server thread/INFO]: Named entity Spider['Hell Spider'/543, uuid='2aa7a129-efca-42cc-bf30-e8f6e06b4f5c', l='ServerLevel[world]', x=-59.53, y=-7.89, z=-37.16, cpos=[-4, -3], tl=7928, v=true] died: Hell Spider tried to swim in lava
+[08:29:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/345, uuid='4213affd-9b7d-4061-a392-e1b76367a0a1', l='ServerLevel[world]', x=-93.30, y=68.00, z=-11.31, cpos=[-6, -1], tl=4688, v=true] died: Hell Zombie burned to death
+[08:29:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/2356, uuid='1a662a6f-daff-4d11-a429-ff0fefe23d4e', l='ServerLevel[world]', x=29.70, y=63.00, z=-6.65, cpos=[1, -1], tl=2898, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:09] [Server thread/INFO]: Candeer45 was blown up by Hell Creeper
+[08:29:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/2289, uuid='735aedd9-1b1a-48fa-b834-984e73578fc3', l='ServerLevel[world]', x=28.71, y=63.00, z=-7.08, cpos=[1, -1], tl=4538, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1115, uuid='c0f0d6ce-780c-4545-ad38-d9940cf22197', l='ServerLevel[world]', x=29.42, y=63.00, z=-7.79, cpos=[1, -1], tl=4349, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/2293, uuid='11f260f5-4027-4c3f-adeb-8eb20db77ae5', l='ServerLevel[world]', x=27.37, y=63.00, z=-7.78, cpos=[1, -1], tl=2815, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1365, uuid='faf051b2-ce37-4c1c-a586-8aa3edf1abeb', l='ServerLevel[world]', x=26.07, y=63.00, z=-6.50, cpos=[1, -1], tl=2659, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1149, uuid='f8f95807-2e28-4b9d-8640-51a4ca1f1651', l='ServerLevel[world]', x=22.43, y=63.85, z=-6.50, cpos=[1, -1], tl=4587, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:10] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/2367, uuid='d97be712-0277-455d-9445-112c88bf4e8a', l='ServerLevel[world]', x=62.37, y=63.00, z=-2.13, cpos=[3, -1], tl=4350, v=true] died: Hell Skeleton burned to death
+[08:29:10] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1076, uuid='e9953c96-a5bc-4679-81a0-8d89262f71fc', l='ServerLevel[world]', x=-68.55, y=86.00, z=18.61, cpos=[-5, 1], tl=2774, v=true] died: Hell Zombie burned to death
+[08:29:10] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1294, uuid='14b3ce0d-9cf8-4c22-89aa-cc2aa9b13585', l='ServerLevel[world]', x=-122.39, y=77.00, z=21.63, cpos=[-8, 1], tl=2499, v=true] died: Hell Zombie burned to death
+[08:29:10] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1096, uuid='455d270c-800d-4f7d-9ba5-f7c327473b16', l='ServerLevel[world]', x=-83.53, y=79.00, z=17.50, cpos=[-6, 1], tl=4834, v=true] died: Hell Zombie burned to death
+[08:29:11] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/368, uuid='83c6556e-a2b7-4390-a2eb-ecc39420a558', l='ServerLevel[world]', x=-100.39, y=80.00, z=-118.55, cpos=[-7, -8], tl=4593, v=true] died: Hell Zombie burned to death
+[08:29:11] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1685, uuid='a30bfe07-8589-4d59-a435-d4e8aa430544', l='ServerLevel[world]', x=-69.39, y=101.00, z=49.13, cpos=[-5, 3], tl=2637, v=true] died: Hell Zombie burned to death
+[08:29:11] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1997, uuid='5d9d1e4a-bba0-4899-a44b-6d6ffb3f087a', l='ServerLevel[world]', x=-45.32, y=100.00, z=53.26, cpos=[-3, 3], tl=7018, v=true] died: Hell Zombie burned to death
+[08:29:11] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1625, uuid='bd2e31d3-eb3a-4c38-8eb2-fd6733a03203', l='ServerLevel[world]', x=-80.61, y=99.00, z=53.55, cpos=[-6, 3], tl=2749, v=true] died: Hell Zombie burned to death
+[08:29:11] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/824, uuid='a8fc0bc8-5491-4fb5-ae96-fbcd3f00d5a4', l='ServerLevel[world]', x=6.16, y=63.00, z=-61.08, cpos=[0, -4], tl=2958, v=true] died: Hell Zombie burned to death
+[08:29:11] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/2414, uuid='3b0b9a8d-8cc4-49b2-bdb7-becf88e1ef66', l='ServerLevel[world]', x=34.44, y=86.00, z=48.58, cpos=[2, 3], tl=2809, v=true] died: Hell Zombie burned to death
+[08:29:12] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1713, uuid='8f197475-721c-4fcd-9ce8-cec1e44eca7d', l='ServerLevel[world]', x=-94.70, y=104.75, z=105.43, cpos=[-6, 6], tl=4879, v=true] died: Hell Zombie burned to death
+[08:29:12] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/2273, uuid='b7d813ef-6448-4679-98a4-0ba47974984d', l='ServerLevel[world]', x=29.52, y=61.75, z=-10.30, cpos=[1, -1], tl=2910, v=true] died: Hell Zombie burned to death
+[08:29:12] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1342, uuid='6bb2c9c7-5e27-4d10-9984-a88b4d413b31', l='ServerLevel[world]', x=-79.47, y=79.00, z=12.42, cpos=[-5, 0], tl=4887, v=true] died: Hell Zombie burned to death
+[08:29:12] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/851, uuid='a2a4ff58-1fb5-4aae-a9b5-df09be151f16', l='ServerLevel[world]', x=8.85, y=62.18, z=-9.00, cpos=[0, -1], tl=4826, v=true] died: Hell Zombie burned to death
+[08:29:13] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/597, uuid='21755a5f-cc97-40ae-94f8-7b01251209c1', l='ServerLevel[world]', x=-47.85, y=96.00, z=-120.37, cpos=[-3, -8], tl=4540, v=true] died: Hell Zombie burned to death
+[08:29:14] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1971, uuid='7323ecbf-ec9b-46cc-8086-5463efd0587e', l='ServerLevel[world]', x=-50.61, y=106.00, z=73.34, cpos=[-4, 4], tl=7266, v=true] died: Hell Zombie burned to death
+[08:29:14] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1361, uuid='c9cb5098-ba4d-4968-ad84-3fcecef5ba70', l='ServerLevel[world]', x=-15.64, y=88.00, z=25.47, cpos=[-1, 1], tl=2760, v=true] died: Hell Zombie burned to death
+[08:29:14] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/462, uuid='7043dbb2-7b47-404f-aad9-7a02f232c3d2', l='ServerLevel[world]', x=-73.37, y=71.00, z=-19.37, cpos=[-5, -2], tl=4600, v=true] died: Hell Zombie burned to death
+[08:29:14] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/365, uuid='e5d47b12-dfed-40ee-9025-33081d695e98', l='ServerLevel[world]', x=-70.67, y=87.00, z=-91.60, cpos=[-5, -6], tl=5107, v=true] died: Hell Zombie burned to death
+[08:29:15] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1357, uuid='79d8a001-40b5-46c7-a52b-01ee2337bcaf', l='ServerLevel[world]', x=-28.46, y=91.00, z=25.49, cpos=[-2, 1], tl=5351, v=true] died: Hell Zombie burned to death
+[08:29:16] [Server thread/INFO]: Candeer45 issued server command: /time set night
+[08:29:16] [Server thread/INFO]: [Candeer45: Set the time to 13000]
+[08:29:16] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1122, uuid='5f4e0ceb-36cc-4cba-b5b1-96342b6f3a3f', l='ServerLevel[world]', x=-5.00, y=93.00, z=-135.14, cpos=[-1, -9], tl=4753, v=true] died: Hell Zombie burned to death
+[08:29:16] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/737, uuid='98467773-2468-4b87-a621-671b333f7b18', l='ServerLevel[world]', x=-23.70, y=72.00, z=-92.30, cpos=[-2, -6], tl=5227, v=true] died: Hell Zombie burned to death
+[08:29:16] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1791, uuid='a795d6e5-407e-43c0-916b-4fa129499946', l='ServerLevel[world]', x=-82.61, y=100.00, z=54.65, cpos=[-6, 3], tl=2872, v=true] died: Hell Zombie burned to death
+[08:29:17] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1684, uuid='958c0978-b71c-4b0d-b450-bb4007f23375', l='ServerLevel[world]', x=-83.51, y=100.00, z=54.78, cpos=[-6, 3], tl=2760, v=true] died: Hell Zombie burned to death
+[08:29:17] [Server thread/INFO]: Candeer45 was blown up by Hell Creeper
+[08:29:18] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/847, uuid='957bbd42-04b1-472c-ba15-0f5138ceed00', l='ServerLevel[world]', x=1.57, y=63.02, z=-27.94, cpos=[0, -2], tl=5026, v=true] died: Hell Zombie burned to death
+[08:29:18] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/343, uuid='4395953a-9ab2-4f01-81bb-547f60074d57', l='ServerLevel[world]', x=-94.30, y=71.00, z=-9.58, cpos=[-6, -1], tl=4963, v=true] died: Hell Zombie burned to death
+[08:29:18] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/35, uuid='d86f0cb2-c512-4722-9a87-091bd4790b77', l='ServerLevel[world]', x=-126.90, y=68.00, z=-25.17, cpos=[-8, -2], tl=5288, v=true] died: Hell Zombie burned to death
+[08:29:18] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/373, uuid='6f919697-71b1-4a5b-94ad-12dac4b0041b', l='ServerLevel[world]', x=-48.65, y=97.00, z=-110.39, cpos=[-4, -7], tl=4743, v=true] died: Hell Zombie burned to death
+[08:29:18] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1571, uuid='e9f7923b-6183-4be1-9fe1-92f85cf52ae7', l='ServerLevel[world]', x=-120.35, y=108.00, z=93.39, cpos=[-8, 5], tl=5149, v=true] died: Hell Zombie burned to death
+[08:29:19] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/494, uuid='fd7abcf0-93d5-45de-8b10-99fbc44ef985', l='ServerLevel[world]', x=-68.59, y=88.00, z=-102.52, cpos=[-5, -7], tl=5374, v=true] died: Hell Zombie burned to death
+[08:29:19] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/820, uuid='5c9786d8-8ed9-49b0-80b6-f1656adacd46', l='ServerLevel[world]', x=-33.68, y=64.00, z=-66.52, cpos=[-3, -5], tl=3042, v=true] died: Hell Zombie burned to death
+[08:29:21] [Server thread/INFO]: Named entity Skeleton['Hell Skeleton'/14, uuid='75856476-d5a0-441e-896a-c1a23fe7aaca', l='ServerLevel[world]', x=-143.73, y=67.00, z=-86.33, cpos=[-9, -6], tl=6919, v=true] died: Hell Skeleton burned to death
+[08:29:22] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1760, uuid='c6d1a322-0303-41dc-9209-177e97a4e417', l='ServerLevel[world]', x=-69.86, y=94.00, z=32.46, cpos=[-5, 2], tl=5325, v=true] died: Hell Zombie burned to death
+[08:29:22] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/72, uuid='4645770d-190a-4362-ab21-5ed2766cccc4', l='ServerLevel[world]', x=-134.42, y=56.00, z=-116.25, cpos=[-9, -8], tl=4946, v=true] died: Hell Zombie was doomed to fall
+[08:29:28] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/771, uuid='4788fd4f-460d-41ea-8de3-15c9f87a5b40', l='ServerLevel[world]', x=-15.30, y=-5.00, z=-35.99, cpos=[-1, -3], tl=8260, v=true] died: Hell Creeper burned to death
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/656, uuid='0523ab2b-3fb2-42db-a01d-dd9c951914fa', l='ServerLevel[world]', x=-32.33, y=67.92, z=-24.51, cpos=[-3, -2], tl=5027, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:36] [Server thread/INFO]: Candeer45 was blown up by Hell Creeper
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/849, uuid='b63496b1-73bb-4cd2-bfc7-488487a4dfbe', l='ServerLevel[world]', x=-25.92, y=65.00, z=-30.23, cpos=[-2, -2], tl=5668, v=true] died: Hell Creeper was blown up by Hell Creeper
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/617, uuid='c9e5ac16-ba68-4f67-ac37-60124d5f3bdf', l='ServerLevel[world]', x=-32.31, y=80.00, z=-93.49, cpos=[-3, -6], tl=5347, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/623, uuid='d0a4a621-bf74-4a4c-bbd2-2f94937ead60', l='ServerLevel[world]', x=-34.33, y=81.00, z=-93.30, cpos=[-3, -6], tl=5833, v=true] died: Hell Spider blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/724, uuid='2bad6a12-3ac6-43af-8ddd-ca2e3c4338cc', l='ServerLevel[world]', x=-31.53, y=75.00, z=-90.43, cpos=[-2, -6], tl=5172, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/4335, uuid='0df12bfb-5711-4c6a-976f-37029e55ab04', l='ServerLevel[world]', x=-4.50, y=66.00, z=-65.50, cpos=[-1, -5], tl=143, v=true] died: Hell Zombie blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/745, uuid='45af87c0-b0c7-4648-b631-701a40a8484f', l='ServerLevel[world]', x=-18.30, y=67.00, z=-50.51, cpos=[-2, -4], tl=3436, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/749, uuid='dfee89a4-c060-45ef-befe-8601376d24c0', l='ServerLevel[world]', x=-23.65, y=68.00, z=-50.72, cpos=[-2, -4], tl=5368, v=true] died: Hell Zombie blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/837, uuid='23896c2e-210c-45a3-8064-9df06bf12f7c', l='ServerLevel[world]', x=-7.44, y=66.00, z=-61.81, cpos=[-1, -4], tl=7546, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/769, uuid='73863e65-fc23-4ccc-bcb6-a920b1943a13', l='ServerLevel[world]', x=-32.30, y=67.10, z=-47.30, cpos=[-3, -3], tl=5590, v=true] died: Hell Spider blew up
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/525, uuid='5d6f66ca-9c42-44f3-a139-cecb957a2458', l='ServerLevel[world]', x=-45.26, y=70.25, z=-42.03, cpos=[-3, -3], tl=5020, v=true] died: Hell Zombie blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/748, uuid='f7fc26be-8c3e-4d09-897a-0883522b2584', l='ServerLevel[world]', x=-24.52, y=65.00, z=-42.88, cpos=[-2, -3], tl=5490, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/750, uuid='c7d63fee-36a9-4aed-83b3-1a8f9739f6d3', l='ServerLevel[world]', x=-18.42, y=66.00, z=-47.39, cpos=[-2, -3], tl=7596, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/840, uuid='ffc55818-49c6-4cdb-adde-3f40b04c70ab', l='ServerLevel[world]', x=-8.22, y=64.00, z=-37.48, cpos=[-1, -3], tl=5768, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/4294, uuid='911ae36f-9108-4a47-821f-d92e91a4a36d', l='ServerLevel[world]', x=-12.83, y=64.00, z=-35.17, cpos=[-1, -3], tl=204, v=true] died: Hell Zombie blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/854, uuid='039cbd75-2c8c-4574-9f9d-c70d5380926f', l='ServerLevel[world]', x=-24.30, y=62.47, z=-29.70, cpos=[-2, -2], tl=7406, v=true] died: Hell Spider was blown up by Hell Creeper
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/4317, uuid='cebc6bc0-45da-4466-b4ac-42c73b110ee7', l='ServerLevel[world]', x=-31.88, y=67.00, z=-26.46, cpos=[-2, -2], tl=169, v=true] died: Hell Zombie was blown up by Hell Creeper
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/798, uuid='b7719521-fe31-4ec1-a6c9-0b1e60f77efb', l='ServerLevel[world]', x=-8.60, y=63.00, z=-21.00, cpos=[-1, -2], tl=3126, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/855, uuid='f5a41129-1196-4c8e-bbbc-18a37415ac21', l='ServerLevel[world]', x=-13.87, y=65.00, z=-30.55, cpos=[-1, -2], tl=7374, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1140, uuid='50695e2b-6ccc-405d-a67e-ab40f06c5fec', l='ServerLevel[world]', x=10.18, y=67.00, z=-76.53, cpos=[0, -5], tl=4759, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1141, uuid='8dcb0f30-7ab9-4721-8ffd-e06e93d16ce8', l='ServerLevel[world]', x=2.09, y=66.00, z=-67.90, cpos=[0, -5], tl=5075, v=true] died: Hell Zombie blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1142, uuid='1025ef3c-aca0-4fa4-bd32-b3d2e54a081c', l='ServerLevel[world]', x=12.17, y=67.00, z=-75.16, cpos=[0, -5], tl=3455, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/1143, uuid='6c057b20-c8c8-47da-b5ca-952584b2790b', l='ServerLevel[world]', x=14.73, y=66.00, z=-71.87, cpos=[0, -5], tl=3523, v=true] died: Hell Spider blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/1144, uuid='b90c8069-8b5e-4b16-a2dc-970b08be15e3', l='ServerLevel[world]', x=5.92, y=68.00, z=-74.41, cpos=[0, -5], tl=3361, v=true] died: Hell Spider blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/846, uuid='717c4e09-dc11-4352-b33e-e188a08f9145', l='ServerLevel[world]', x=13.52, y=64.00, z=-69.30, cpos=[0, -5], tl=3462, v=true] died: Hell Spider blew up
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/4295, uuid='94f039be-dc36-450d-b146-89c508117496', l='ServerLevel[world]', x=7.57, y=64.00, z=-64.43, cpos=[0, -5], tl=204, v=true] died: Hell Zombie blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/1146, uuid='dc5d9c86-d409-4919-9613-2381e3f6cf1d', l='ServerLevel[world]', x=12.36, y=64.00, z=-67.36, cpos=[0, -5], tl=4973, v=true] died: Hell Spider blew up
+[08:29:36] [Server thread/INFO]: Named entity Spider['Hell Spider'/1375, uuid='d44a1ede-51e1-46ec-ae61-e9e1892ecb8f', l='ServerLevel[world]', x=30.70, y=63.00, z=-70.76, cpos=[1, -5], tl=5113, v=true] died: Hell Spider blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1148, uuid='a5789c74-5ff8-46ee-9dae-68c6dc5e4c9d', l='ServerLevel[world]', x=10.81, y=63.00, z=-62.25, cpos=[0, -4], tl=3523, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1376, uuid='709bd151-16ab-409f-82ae-cc9929062147', l='ServerLevel[world]', x=29.14, y=63.00, z=-62.81, cpos=[1, -4], tl=4783, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/850, uuid='18db27dc-c907-4850-9655-35862903cfa8', l='ServerLevel[world]', x=11.74, y=63.00, z=-46.93, cpos=[0, -3], tl=3402, v=true] died: Hell Enderman blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1150, uuid='aaddefa3-969c-438e-97c8-00270d867fc4', l='ServerLevel[world]', x=7.50, y=65.00, z=-42.80, cpos=[0, -3], tl=3271, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/2287, uuid='e222d355-7954-4c2c-9a59-ddcf7b52ea21', l='ServerLevel[world]', x=27.78, y=64.00, z=-36.16, cpos=[1, -3], tl=3494, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1378, uuid='a46c4cfe-dd37-46d7-9045-709e47dfb247', l='ServerLevel[world]', x=27.44, y=64.00, z=-35.17, cpos=[1, -3], tl=5165, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/2277, uuid='10785e3f-0245-40b4-abed-bcf4b6d84d56', l='ServerLevel[world]', x=37.17, y=64.00, z=-37.17, cpos=[2, -3], tl=3494, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1377, uuid='02d6d922-8d2f-43d5-bd76-ffba8e573a58', l='ServerLevel[world]', x=39.23, y=64.00, z=-30.84, cpos=[2, -2], tl=5165, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1355, uuid='d7fb0989-83f9-49b8-b139-98b20ebf57e7', l='ServerLevel[world]', x=-27.45, y=89.00, z=24.50, cpos=[-2, 1], tl=4954, v=true] died: Hell Zombie blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/4332, uuid='4442de38-9ec1-4b83-9420-31c09b99f29e', l='ServerLevel[world]', x=-7.08, y=79.00, z=19.92, cpos=[-1, 1], tl=145, v=true] died: Hell Creeper blew up
+[08:29:36] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/1368, uuid='99f871c6-1435-477a-b9a3-0b8b66db110a', l='ServerLevel[world]', x=-12.16, y=89.00, z=27.48, cpos=[-1, 1], tl=4842, v=true] died: Hell Creeper blew up
+[08:29:39] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/3731, uuid='a44f0b1a-911b-4f31-97c7-13bc8916b05f', l='ServerLevel[world]', x=104.18, y=-6.00, z=4.19, cpos=[6, 0], tl=892, v=true] died: Hell Creeper went up in flames
+[08:29:41] [Server thread/INFO]: Candeer45 has made the advancement [Stone Age]
+[08:29:45] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 5009ms or 100 ticks behind
+[08:29:45] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/4078, uuid='8e3e78d4-9d07-437b-9ce9-a0af963514e1', l='ServerLevel[world]', x=74.12, y=-1.00, z=-14.73, cpos=[4, -1], tl=598, v=true] died: Hell Enderman went up in flames
+[08:29:46] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/270, uuid='dd7ff46d-d87d-4c05-903d-ff3fcfddd59f', l='ServerLevel[world]', x=-90.78, y=28.00, z=-90.06, cpos=[-6, -6], tl=7784, v=true] died: Hell Creeper went up in flames
+[08:29:48] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/4079, uuid='edbf57ea-628f-49ef-aa01-8a9d89a47ef0', l='ServerLevel[world]', x=85.55, y=-47.00, z=-90.38, cpos=[5, -6], tl=621, v=true] died: Hell Enderman went up in flames
+[08:29:50] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/1692, uuid='c1264f3b-e11e-44db-9ee8-81a95ba213f8', l='ServerLevel[world]', x=-81.89, y=80.00, z=68.12, cpos=[-6, 4], tl=5340, v=true] died: Hell Zombie fell from a high place
+[08:29:53] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/628, uuid='2735e737-005d-4ebb-87ac-72166c086df3', l='ServerLevel[world]', x=-32.87, y=69.00, z=-56.87, cpos=[-3, -4], tl=5323, v=true] died: Hell Creeper burned to death
+[08:29:55] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/579, uuid='2c92b4da-4fc9-44c6-aec0-98ad707842d9', l='ServerLevel[world]', x=-44.80, y=68.00, z=-18.44, cpos=[-3, -2], tl=5581, v=true] died: Hell Creeper went up in flames
+[08:30:00] [Server thread/INFO]: Named entity Creeper['Hell Creeper'/775, uuid='44b591d2-fb5c-4363-ad2a-93407b18552d', l='ServerLevel[world]', x=-14.85, y=-4.83, z=-36.63, cpos=[-1, -3], tl=8223, v=true] died: Hell Creeper tried to swim in lava
+[08:30:05] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/4273, uuid='6d170e93-f3a2-40d6-9bee-cbe42a504d4d', l='ServerLevel[world]', x=146.88, y=-49.00, z=18.44, cpos=[9, 1], tl=618, v=true] died: Hell Enderman went up in flames
+[08:30:08] [Server thread/INFO]: Candeer45 was doomed to fall by Hell Spider
+[08:30:28] [Server thread/INFO]: Candeer45 issued server command: /gamemode creative
+[08:30:28] [Server thread/INFO]: [Candeer45: Set own game mode to Creative Mode]
+[08:30:28] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/5052, uuid='961f0999-8d68-445a-a56f-0de25b7baaa7', l='ServerLevel[world]', x=77.42, y=-1.00, z=0.15, cpos=[4, 0], tl=527, v=true] died: Hell Enderman went up in flames
+[08:30:58] [Server thread/INFO]: Named entity Drowned['Hell Zombie'/2318, uuid='b3a50687-6aa5-426e-9364-19232a84c231', l='ServerLevel[world]', x=44.93, y=7.00, z=-7.26, cpos=[2, -1], tl=5808, v=true] died: Hell Zombie discovered the floor was lava
+[08:31:20] [Server thread/INFO]: Named entity Spider['Hell Spider'/5293, uuid='35c550f4-e5e7-4572-bd6c-158fae5564c6', l='ServerLevel[world]', x=36.81, y=11.00, z=102.54, cpos=[2, 6], tl=1117, v=true] died: Hell Spider fell from a high place
+[08:32:09] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/8169, uuid='8f7d16ca-97bf-42f1-a513-c6f213952380', l='ServerLevel[world]', x=-317.75, y=79.00, z=735.49, cpos=[-20, 45], tl=189, v=true] died: Hell Zombie was slain by Iron Golem
+[08:32:13] [Server thread/INFO]: Named entity Zombie['Hell Zombie'/8168, uuid='459f692d-8120-49cc-8ddb-81bb899b0045', l='ServerLevel[world]', x=-320.70, y=79.00, z=730.62, cpos=[-21, 45], tl=272, v=true] died: Hell Zombie was slain by Iron Golem
+[08:32:21] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/7786, uuid='4b22a408-c512-4779-872a-3df51fb1926b', l='ServerLevel[world]', x=-385.54, y=-50.00, z=629.27, cpos=[-25, 39], tl=637, v=true] died: Hell Enderman went up in flames
+[08:32:22] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/7898, uuid='d0a1d3fc-80e2-43cc-a5e9-6b11e27d602c', l='ServerLevel[world]', x=-347.63, y=-45.00, z=785.01, cpos=[-22, 49], tl=617, v=true] died: Hell Enderman went up in flames
+[08:32:49] [Server thread/INFO]: Candeer45 issued server command: /crimson
+[08:33:15] [Server thread/INFO]: Named entity EnderMan['Hell Enderman'/9702, uuid='97cf7b2f-5eda-4e5e-b16b-21034d57ae6f', l='ServerLevel[world]', x=-545.13, y=10.00, z=825.87, cpos=[-35, 51], tl=642, v=true] died: Hell Enderman went up in flames
+[08:33:18] [Server thread/INFO]: Candeer45 lost connection: Disconnected
+[08:33:18] [Server thread/INFO]: Candeer45 left the game
+[08:33:20] [Server thread/INFO]: Stopping the server
+[08:33:20] [Server thread/INFO]: Stopping server
+[08:33:20] [Server thread/INFO]: [WorldSettingsPlugin] Disabling WorldSettingsPlugin v1.0.0
+[08:33:20] [Server thread/INFO]: [WorldSettingsPlugin] WorldSettingsPlugin disabled.
+[08:33:20] [Server thread/INFO]: Saving players
+[08:33:21] [Server thread/INFO]: Saving worlds
+[08:33:21] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[08:33:21] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+[08:33:21] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+[08:33:21] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+[08:33:30] [Server thread/INFO]: [ChunkHolderManager] Saved 1705 block chunks, 1458 entity chunks, 0 poi chunks in world 'world' in 9.34s
+[08:33:30] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[08:33:30] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+[08:33:30] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+[08:33:30] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+[08:33:30] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+[08:33:31] [Server thread/INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_nether' in 1.42s
+[08:33:32] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[08:33:32] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
+[08:33:32] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
+[08:33:32] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
+[08:33:32] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'
+[08:33:32] [Server thread/INFO]: [ChunkHolderManager] Saved 529 block chunks, 529 entity chunks, 0 poi chunks in world 'world_the_end' in 0.37s
+[08:33:32] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[08:33:32] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[08:33:32] [Server thread/INFO]: Flushing Chunk IO
+[08:33:32] [Server thread/INFO]: Closing Thread Pool
+[08:33:32] [Server thread/INFO]: Closing Server

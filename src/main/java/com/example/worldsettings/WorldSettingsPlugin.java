@@ -58,7 +58,7 @@ public class WorldSettingsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HellCreeperListener(), this);
         getServer().getPluginManager().registerEvents(new HellZombieListener(), this);
         getServer().getPluginManager().registerEvents(new HellSpiderListener(), this);
-        getServer().getPluginManager().registerEvents(new HellPhantomListener(), this);
+        // getServer().getPluginManager().registerEvents(new HellPhantomListener(), this);
         getServer().getPluginManager().registerEvents(new HellEndermanListener(), this);
         getServer().getPluginManager().registerEvents(new HellSkeletonListener(), this);
 
@@ -84,7 +84,6 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
         // Register the furnace listener for Purifying Furnace
         getServer().getPluginManager().registerEvents(new FurnaceListener(), this);
->>>>>>> origin/main
 
         // Register the dragon egg destruction listener (for Void Devourer boss spawn)
         getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
