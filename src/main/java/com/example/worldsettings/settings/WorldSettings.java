@@ -97,6 +97,7 @@ public class WorldSettings {
     public void decreaseHordeSize()              { maximumHordeSize = Math.max(10, maximumHordeSize - 10); }
 
     public boolean isEnhancedMobs()              { return enhancedMobs; }
+    public void setEnhancedMobs(boolean enabled)  { enhancedMobs = enabled; }
     public void toggleEnhancedMobs()             { enhancedMobs = !enhancedMobs; }
 
     public DifficultyLevel getDifficultyLevel()  { return difficultyLevel; }

@@ -19,12 +19,15 @@ import com.example.worldsettings.listeners.PlayerMovementListener;
 import com.example.worldsettings.listeners.PostEndListener;
 import com.example.worldsettings.listeners.ProjectileListener;
 import com.example.worldsettings.listeners.WorldSettingsGameplayListener;
+import com.example.worldsettings.listeners.CrimsonDescentManager;
 import com.example.worldsettings.settings.WorldSettings;
 import com.example.worldsettings.sidebar.PlayerJoinListener;
 import com.example.worldsettings.sidebar.PlayerAdvancementListener;
+import com.example.worldsettings.sidebar.ProgressionSidebar;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -39,6 +42,8 @@ public class WorldSettingsPlugin extends JavaPlugin {
     private WorldSettings worldSettings;
     private SuperEnchantmentTableManager superEnchantmentTableManager;
     private ProgressionManager progressionManager;
+    private CrimsonDescentManager crimsonDescentManager;
+    private PostEndListener postEndListener;
 
     @Override
     public void onEnable() {
@@ -62,9 +67,10 @@ public class WorldSettingsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HellSkeletonListener(), this);
 
         // Register the post-end listener (dragon death activation)
-        getServer().getPluginManager().registerEvents(new PostEndListener(), this);
+        postEndListener = new PostEndListener(this);
+        getServer().getPluginManager().registerEvents(postEndListener, this);
         // Start Crimson Descent manager (nightly randomized event)
-        new com.example.worldsettings.listeners.CrimsonDescentManager(this);
+        crimsonDescentManager = new CrimsonDescentManager(this);
 
         // Register the entity death listener for custom drops
         getServer().getPluginManager().registerEvents(new EntityDeathListener(), this);
@@ -90,12 +96,15 @@ public class WorldSettingsPlugin extends JavaPlugin {
         // Register Super Enchantment Table listener
         getServer().getPluginManager().registerEvents(
             new SuperEnchantmentTableListener(superEnchantmentTableManager), this);
-        
-        // Register Super Table recipe
-        superEnchantmentTableManager.registerSuperTableRecipe();
 
         // Register custom recipes
         registerRecipes();
+
+        getServer().getScheduler().runTaskTimer(this, () -> {
+            for (Player onlinePlayer : getServer().getOnlinePlayers()) {
+                ProgressionSidebar.updateSidebar(onlinePlayer, progressionManager);
+            }
+        }, 0L, 100L);
 
         getLogger().info("========================================");
         getLogger().info(" WorldSettingsPlugin v1.0.0 enabled!");
@@ -107,7 +116,22 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (crimsonDescentManager != null) {
+            crimsonDescentManager.stopAllEvents();
+        }
+        if (postEndListener != null) {
+            postEndListener.deactivateAll();
+        }
         getLogger().info("WorldSettingsPlugin disabled.");
+    }
+
+    private World getPrimaryOverworld() {
+        for (World world : getServer().getWorlds()) {
+            if (world.getEnvironment() == World.Environment.NORMAL) {
+                return world;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -122,6 +146,109 @@ public class WorldSettingsPlugin extends JavaPlugin {
                 reloadConfig();
                 reloadSettingsFromConfig();
                 sender.sendMessage(ChatColor.GREEN + "World settings config reloaded.");
+                return true;
+            }
+
+            if (args.length > 0 && args[0].equalsIgnoreCase("stopall")) {
+                if (!sender.hasPermission("worldsettings.reload")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to stop active world phases.");
+                    return true;
+                }
+
+                World overworld = getPrimaryOverworld();
+                if (overworld != null) {
+                    worldSettings.setCrimsonDescentEnabled(false);
+                    crimsonDescentManager.stopEvent(overworld);
+                    postEndListener.deactivatePostEnd(overworld);
+                    saveSettingsToConfig();
+                }
+                sender.sendMessage(ChatColor.GRAY + "Crimson Descent and Post-End phase stopped.");
+                return true;
+            }
+
+            if (args.length > 1
+                && args[0].equalsIgnoreCase("postend")
+                && args[1].equalsIgnoreCase("start")) {
+                if (!sender.hasPermission("worldsettings.reload")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to start the post-end phase.");
+                    return true;
+                }
+
+                World targetWorld = sender instanceof Player player ? player.getWorld() : getPrimaryOverworld();
+                if (targetWorld == null || !postEndListener.activatePostEnd(targetWorld, sender instanceof Player player ? player : null)) {
+                    sender.sendMessage(ChatColor.RED + "No valid overworld found for the post-end phase.");
+                    return true;
+                }
+                saveSettingsToConfig();
+                sender.sendMessage(ChatColor.GOLD + "Post-End phase activated.");
+                return true;
+            }
+
+            if (args.length > 1
+                && args[0].equalsIgnoreCase("postend")
+                && args[1].equalsIgnoreCase("stop")) {
+                if (!sender.hasPermission("worldsettings.reload")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to stop the post-end phase.");
+                    return true;
+                }
+
+                World targetWorld = sender instanceof Player player ? player.getWorld() : getPrimaryOverworld();
+                if (targetWorld == null || !postEndListener.deactivatePostEnd(targetWorld)) {
+                    sender.sendMessage(ChatColor.RED + "No valid overworld found for the post-end phase.");
+                    return true;
+                }
+                saveSettingsToConfig();
+                sender.sendMessage(ChatColor.GRAY + "Post-End phase stopped.");
+                return true;
+            }
+
+            if (args.length > 1
+                && args[0].equalsIgnoreCase("crimsondescent")
+                && args[1].equalsIgnoreCase("start")) {
+                if (!sender.hasPermission("worldsettings.reload")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to start Crimson Descent.");
+                    return true;
+                }
+
+                World targetWorld = null;
+                if (sender instanceof Player player) {
+                    targetWorld = player.getWorld();
+                } else {
+                    for (World world : getServer().getWorlds()) {
+                        if (world.getEnvironment() == World.Environment.NORMAL) {
+                            targetWorld = world;
+                            break;
+                        }
+                    }
+                }
+
+                if (targetWorld == null || !crimsonDescentManager.startNow(targetWorld)) {
+                    sender.sendMessage(ChatColor.RED + "No valid overworld found for Crimson Descent.");
+                    return true;
+                }
+
+                sender.sendMessage(ChatColor.DARK_RED + "Crimson Descent started in " + targetWorld.getName() + ".");
+                return true;
+            }
+
+            if (args.length > 1
+                && args[0].equalsIgnoreCase("crimsondescent")
+                && args[1].equalsIgnoreCase("stop")) {
+                if (!sender.hasPermission("worldsettings.reload")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to stop Crimson Descent.");
+                    return true;
+                }
+
+                World targetWorld = sender instanceof Player player ? player.getWorld() : getPrimaryOverworld();
+                if (targetWorld == null) {
+                    sender.sendMessage(ChatColor.RED + "No valid overworld found for Crimson Descent.");
+                    return true;
+                }
+
+                worldSettings.setCrimsonDescentEnabled(false);
+                crimsonDescentManager.stopEvent(targetWorld);
+                saveSettingsToConfig();
+                sender.sendMessage(ChatColor.GRAY + "Crimson Descent stopped in " + targetWorld.getName() + ".");
                 return true;
             }
 
