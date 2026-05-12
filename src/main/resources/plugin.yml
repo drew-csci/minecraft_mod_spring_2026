@@ -16,6 +16,11 @@ commands:
     usage: /progression
     permission: worldsettings.use
 
+  supertableinfo:
+    description: Shows Super Enchantment Table information
+    usage: /supertableinfo
+    permission: worldsettings.supertable.info
+
 permissions:
   worldsettings.use:
     description: Allows opening the world settings menu
@@ -23,3 +28,6 @@ permissions:
   worldsettings.reload:
     description: Allows reloading world settings config
     default: op
+  worldsettings.supertable.info:
+    description: Allows viewing super enchantment table information
+    default: true
