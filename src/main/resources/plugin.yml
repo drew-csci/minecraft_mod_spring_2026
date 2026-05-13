@@ -16,6 +16,11 @@ commands:
     usage: /progression
     permission: worldsettings.use
 
+  crimson:
+    description: Manually triggers the Crimson Descent event
+    usage: /crimson
+    permission: worldsettings.crimson
+
   supertableinfo:
     description: Shows Super Enchantment Table information
     usage: /supertableinfo
@@ -27,6 +32,9 @@ permissions:
     default: op
   worldsettings.reload:
     description: Allows reloading world settings config
+    default: op
+  worldsettings.crimson:
+    description: Allows triggering the Crimson Descent event
     default: op
   worldsettings.supertable.info:
     description: Allows viewing super enchantment table information

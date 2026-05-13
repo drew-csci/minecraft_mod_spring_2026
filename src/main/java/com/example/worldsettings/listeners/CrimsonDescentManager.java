@@ -5,6 +5,7 @@ import com.example.worldsettings.settings.WorldSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 
@@ -61,13 +62,14 @@ public class CrimsonDescentManager {
     private final Map<UUID, BukkitRunnable> activeTasks = new HashMap<>();
     private final Set<UUID> activeWorlds = new HashSet<>();
 
-    // Candidate hostile mobs for spawning (Overworld-safe)
+    // Candidate hostile mobs for spawning (Overworld-safe and hellified)
     private static final EntityType[] MOB_TYPES = new EntityType[] {
             EntityType.ZOMBIE,
             EntityType.SKELETON,
             EntityType.CREEPER,
             EntityType.SPIDER,
-            EntityType.WITCH
+            EntityType.ENDERMAN,
+            EntityType.PHANTOM
     };
 
     public CrimsonDescentManager(JavaPlugin plugin) {
@@ -79,6 +81,11 @@ public class CrimsonDescentManager {
                 tick();
             }
         }.runTaskTimer(plugin, 0L, 100L);
+    }
+
+    public void manualTrigger(World world) {
+        if (world.getEnvironment() != World.Environment.NORMAL) return;
+        startCrimsonDescent(world);
     }
 
     private void tick() {
@@ -97,7 +104,8 @@ public class CrimsonDescentManager {
             boolean prev = lastWasNight.getOrDefault(wid, false);
 
             if (isNight && !prev) {
-                // Night just started for this world — evaluate event
+                // Night just started for this world — spawn nightly hell phantoms first and evaluate event
+                spawnNightlyPhantoms(world);
                 long day = world.getFullTime() / 24000L;
                 if (day < ws.getCrimsonMinStartDay()) {
                     // Not yet allowed
@@ -242,6 +250,7 @@ public class CrimsonDescentManager {
             player.sendMessage(ChatColor.DARK_RED + "The Crimson Descent has begun! " + ChatColor.WHITE + "Beware...");
             try { player.sendTitle(title, subtitle, 10, 80, 20); } catch (NoSuchMethodError ignored) {}
             player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1.0f, 0.8f);
+            player.playSound(player.getLocation(), Sound.MUSIC_DISC_11, SoundCategory.RECORDS, 1.2f, 0.9f);
             boss.addPlayer(player);
 
             spawnMobsAroundPlayer(world, player, chosen, 70);
@@ -285,39 +294,83 @@ public class CrimsonDescentManager {
             double dx = Math.cos(angle) * dist;
             double dz = Math.sin(angle) * dist;
 
-            int tx = base.getBlockX() + (int) Math.round(dx);
-            int tz = base.getBlockZ() + (int) Math.round(dz);
-            int ty = world.getHighestBlockYAt(tx, tz);
-
-            Location spawnLoc = new Location(world, tx + 0.5, ty + 1.0, tz + 0.5);
+            Location spawnLoc;
+            if (type == EntityType.PHANTOM) {
+                double height = 20.0 + rng.nextDouble() * 10.0;
+                spawnLoc = base.clone().add(dx, height, dz);
+            } else {
+                int tx = base.getBlockX() + (int) Math.round(dx);
+                int tz = base.getBlockZ() + (int) Math.round(dz);
+                int ty = world.getHighestBlockYAt(tx, tz);
+                spawnLoc = new Location(world, tx + 0.5, ty + 1.0, tz + 0.5);
+            }
             try {
                 org.bukkit.entity.Entity ent = world.spawnEntity(spawnLoc, type);
-                // Respect existing toggle: only apply mob enhancements if enabled in settings
-                WorldSettings ws = WorldSettingsPlugin.getInstance().getWorldSettings();
-                if (ws.isEnhancedMobs() && ent instanceof LivingEntity) {
+                if (ent instanceof org.bukkit.entity.Creeper) {
+                    com.example.worldsettings.mobs.HellCreeper.convert((org.bukkit.entity.Creeper) ent);
+                } else if (ent instanceof org.bukkit.entity.Zombie) {
+                    com.example.worldsettings.mobs.HellZombie.convert((org.bukkit.entity.Zombie) ent);
+                } else if (ent instanceof org.bukkit.entity.Skeleton) {
+                    com.example.worldsettings.mobs.HellSkeleton.convert((org.bukkit.entity.Skeleton) ent);
+                } else if (ent instanceof org.bukkit.entity.Spider) {
+                    com.example.worldsettings.mobs.HellSpider.convert((org.bukkit.entity.Spider) ent);
+                } else if (ent instanceof org.bukkit.entity.Enderman) {
+                    com.example.worldsettings.mobs.HellEnderman.convert((org.bukkit.entity.Enderman) ent);
+                } else if (ent instanceof org.bukkit.entity.Phantom) {
+                    com.example.worldsettings.mobs.HellPhantom.convert((org.bukkit.entity.Phantom) ent);
+                }
+
+                if (ent instanceof LivingEntity) {
                     LivingEntity mob = (LivingEntity) ent;
-                    double boost = ws.getPostEndDifficultyBoost(); // reuse boost setting
+                    double boost = 4.0; // stronger Crimson mobs
                     try {
                         AttributeInstance hp = mob.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                         if (hp != null) {
                             double hpBase = Math.max(1.0, hp.getBaseValue());
                             double newBase = Math.max(1.0, hpBase * boost);
                             hp.setBaseValue(newBase);
-                            mob.setHealth(Math.min(newBase, mob.getHealth()));
+                            mob.setHealth(newBase);
                         }
-                    } catch (Throwable ignored) {
-                        // ignore attribute failures
-                    }
+                    } catch (Throwable ignored) {}
 
-                    int amplifier = Math.max(0, (int) Math.round(boost) - 1);
                     int duration = 20 * 60 * 5; // 5 minutes
-                    mob.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, duration, amplifier, true, false));
-                    mob.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, duration, amplifier, true, false));
-                    mob.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, duration, Math.max(0, amplifier-1), true, false));
+                    mob.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, duration, 2, true, false));
+                    mob.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, duration, 2, true, false));
+                    mob.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, duration, 1, true, false));
                 }
             } catch (Throwable t) {
                 // ignore spawn failures for certain entity types or cramped spaces
             }
+        }
+    }
+
+    private void spawnNightlyPhantoms(World world) {
+        plugin.getLogger().info("Spawning nightly hell phantoms in world " + world.getName());
+        for (Player player : world.getPlayers()) {
+            int count = 3 + rng.nextInt(3);
+            for (int i = 0; i < count; i++) {
+                double angle = rng.nextDouble() * Math.PI * 2.0;
+                double dist = 8.0 + rng.nextDouble() * 12.0;
+                double dx = Math.cos(angle) * dist;
+                double dz = Math.sin(angle) * dist;
+                int tx = player.getLocation().getBlockX() + (int) Math.round(dx);
+                int tz = player.getLocation().getBlockZ() + (int) Math.round(dz);
+                int topY = world.getHighestBlockYAt(tx, tz);
+                double y = Math.min(world.getMaxHeight() - 2, topY + 24.0 + rng.nextDouble() * 6.0);
+                Location spawnLoc = new Location(world, tx + 0.5, y, tz + 0.5);
+
+                try {
+                    org.bukkit.entity.Entity ent = world.spawnEntity(spawnLoc, EntityType.PHANTOM);
+                    if (ent instanceof org.bukkit.entity.Phantom) {
+                        com.example.worldsettings.mobs.HellPhantom.convert((org.bukkit.entity.Phantom) ent);
+                    }
+                } catch (Throwable t) {
+                    plugin.getLogger().warning("Failed to spawn nightly hell phantom at " + spawnLoc + ": " + t.getMessage());
+                }
+            }
+
+            player.playSound(player.getLocation(), Sound.ENTITY_PHANTOM_AMBIENT, SoundCategory.HOSTILE, 0.9f, 1.2f);
+            player.sendMessage(ChatColor.RED + "Hell Phantoms stalk the night...");
         }
     }
 }

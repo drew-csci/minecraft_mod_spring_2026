@@ -63,6 +63,7 @@ public class WorldSettingsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HellCreeperListener(), this);
         getServer().getPluginManager().registerEvents(new HellZombieListener(), this);
         getServer().getPluginManager().registerEvents(new HellSpiderListener(), this);
+        // getServer().getPluginManager().registerEvents(new HellPhantomListener(), this);
         getServer().getPluginManager().registerEvents(new HellEndermanListener(), this);
         getServer().getPluginManager().registerEvents(new HellSkeletonListener(), this);
 
@@ -93,6 +94,9 @@ public class WorldSettingsPlugin extends JavaPlugin {
         // Register the dragon egg destruction listener (for Void Devourer boss spawn)
         getServer().getPluginManager().registerEvents(new DragonEggDestructionListener(), this);
         
+        // Start Crimson Descent event manager and day tracker display
+        new com.example.worldsettings.listeners.CrimsonDescentManager(this);
+        com.example.worldsettings.listeners.DayTrackerListener.startDayTrackerTask(this);
         // Register Super Enchantment Table listener
         getServer().getPluginManager().registerEvents(
             new SuperEnchantmentTableListener(superEnchantmentTableManager), this);
@@ -279,7 +283,23 @@ public class WorldSettingsPlugin extends JavaPlugin {
 
             return true;
         }
-        
+
+        if (command.getName().equalsIgnoreCase("crimson")) {
+            if (!sender.hasPermission("worldsettings.crimson")) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to trigger the Crimson Descent.");
+                return true;
+            }
+            
+            Player player = (Player) sender;
+            // Manually trigger the Crimson Descent in the player's world
+            // Find or create the CrimsonDescentManager and trigger it
+            com.example.worldsettings.listeners.CrimsonDescentManager manager = 
+                new com.example.worldsettings.listeners.CrimsonDescentManager(this);
+            manager.manualTrigger(player.getWorld());
+            player.sendMessage(ChatColor.DARK_RED + "The Crimson Descent has been triggered!");
+            return true;
+        }
+
         if (command.getName().equalsIgnoreCase("supertableinfo")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Only players can use this command.");
@@ -298,7 +318,6 @@ public class WorldSettingsPlugin extends JavaPlugin {
             player.sendMessage("§eCost: 1.5x lapis, 2x XP");
             return true;
         }
-        
         return false;
     }
 

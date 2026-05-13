@@ -1,1 +1,89 @@
-# GöÇGöÇGöÇ Java / Maven Build GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇtarget/*.class*.jar*.war*.ear*.zip*.tar.gz*.rardependency-reduced-pom.xmlbuildNumber.properties.mvn/timing.properties.mvn/wrapper/maven-wrapper.jarpom.xml.tagpom.xml.releaseBackuppom.xml.versionsBackuppom.xml.nextrelease.properties# GöÇGöÇGöÇ IntelliJ IDEA GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇ.idea/*.iml*.iws*.iprout/cmake-build-*/# GöÇGöÇGöÇ Eclipse GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇ.classpath.project.settings/bin/.metadata/# GöÇGöÇGöÇ VS Code GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇ.vscode/*.code-workspace# GöÇGöÇGöÇ NetBeans GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇnbproject/private/nbbuild/nbdist/nb-configuration.xml# GöÇGöÇGöÇ OS Files GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇ.DS_Store.DS_Store?._*.Spotlight-V100.TrashesThumbs.dbehthumbs.dbDesktop.ini$RECYCLE.BIN/# GöÇGöÇGöÇ Python (generator script) GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇ__pycache__/*.pyc*.pyo*.pyd.Python*.egg-info/.venv/venv/env/# GöÇGöÇGöÇ Minecraft Server (if testing locally in-repo) GöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇGöÇserver/*.loglogs/world/world_nether/world_the_end/plugins/!src/main/resources/plugin.ymleula.txtserver.propertiesbanned-ips.jsonbanned-players.jsonops.jsonwhitelist.jsonusercache.jsoncommands.ymlbukkit.ymlspigot.ymlpaper.ymlpaper-global.ymlpaper-world-defaults.ymlconfig/cache/libraries/versions/
+#################################################
+# Build output (Maven / Gradle)
+#################################################
+target/
+build/
+out/
+
+*.class
+*.jar
+*.war
+*.ear
+
+#################################################
+# Maven
+#################################################
+.mvn/
+mvnw
+mvnw.cmd
+dependency-reduced-pom.xml
+
+#################################################
+# IntelliJ IDEA
+#################################################
+.idea/
+*.iml
+*.iws
+*.ipr
+
+#################################################
+# VS Code
+#################################################
+.vscode/
+
+#################################################
+# Eclipse
+#################################################
+.classpath
+.project
+.settings/
+bin/
+
+#################################################
+# OS files
+#################################################
+.DS_Store
+Thumbs.db
+
+#################################################
+# Minecraft server runtime files
+# (IMPORTANT - DO NOT COMMIT THESE)
+#################################################
+world/
+world_nether/
+world_the_end/
+
+logs/
+plugins/
+cache/
+
+#################################################
+# Minecraft generated files
+#################################################
+*.log
+*.mca
+*.dat
+*.gz
+
+#################################################
+# Server configuration files (runtime only)
+#################################################
+eula.txt
+server.properties
+banned-ips.json
+banned-players.json
+ops.json
+whitelist.json
+usercache.json
+commands.yml
+bukkit.yml
+spigot.yml
+paper.yml
+paper-global.yml
+paper-world-defaults.yml
+
+#################################################
+# Paper / server versions folder
+#################################################
+versions/
+libraries/

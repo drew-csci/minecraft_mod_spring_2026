@@ -16,7 +16,7 @@ public final class HellCreeper {
 
     public static final String METADATA_KEY = "HellCreeper";
     public static final String CUSTOM_NAME = ChatColor.DARK_RED + "Hell Creeper";
-    public static final float EXPLOSION_POWER = 8.0f;
+    public static final float EXPLOSION_POWER = 40.0f;
 
     private HellCreeper() {
         // utility class
