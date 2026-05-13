@@ -1,6 +1,7 @@
 package com.example.worldsettings.listeners;
 
 import com.example.worldsettings.WorldSettingsPlugin;
+import com.example.worldsettings.progression.ProgressionManager;
 import com.example.worldsettings.settings.WorldSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -244,7 +245,8 @@ public class CrimsonDescentManager {
             player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1.0f, 0.8f);
             boss.addPlayer(player);
 
-            spawnMobsAroundPlayer(world, player, chosen, 70);
+            int scaledSpawnCount = calculateCrimsonSpawnCount(player, 70);
+            spawnMobsAroundPlayer(world, player, chosen, scaledSpawnCount);
         }
 
         // Spawn red sky particles periodically and remove effects after duration
@@ -273,6 +275,18 @@ public class CrimsonDescentManager {
         };
         task.runTaskTimer(plugin, 0L, 20L);
         activeTasks.put(wid, task);
+    }
+
+        static int calculateScaledSpawnCount(int baseCount, int progressionPercent) {
+            return ProgressionManager.scaleCountByProgression(baseCount, progressionPercent);
+    }
+
+    private int calculateCrimsonSpawnCount(Player player, int baseCount) {
+        int progressionPercent = WorldSettingsPlugin.getInstance()
+            .getProgressionManager()
+            .getProgressionPercent(player);
+
+        return calculateScaledSpawnCount(baseCount, progressionPercent);
     }
 
     private void spawnMobsAroundPlayer(World world, Player player, EntityType type, int count) {

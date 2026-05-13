@@ -1,15 +1,20 @@
 package com.example.worldsettings.listeners;
 
 import com.example.worldsettings.WorldSettingsPlugin;
+import com.example.worldsettings.progression.ProgressionManager;
 import com.example.worldsettings.settings.WorldSettings;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -22,16 +27,24 @@ public class WorldSettingsGameplayListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        WorldSettings settings = WorldSettingsPlugin.getInstance().getWorldSettings();
+        WorldSettingsPlugin plugin = WorldSettingsPlugin.getInstance();
+        WorldSettings settings = plugin.getWorldSettings();
 
-        if (!settings.isEnhancedMobs()) {
-            return;
-        }
         if (!(event.getEntity() instanceof Monster)) {
             return;
         }
 
         LivingEntity entity = event.getEntity();
+        if (!isRegularScalableMob(entity)) {
+            return;
+        }
+
+        double progressionScale = plugin.getProgressionManager().getAverageProgressionScale(entity.getWorld());
+        scaleMobHealth(entity, progressionScale);
+
+        if (!settings.isEnhancedMobs()) {
+            return;
+        }
 
         int speedAmplifier = switch (settings.getDifficultyLevel()) {
             case EASY -> 0;
@@ -45,6 +58,29 @@ public class WorldSettingsGameplayListener implements Listener {
             int strengthAmplifier = settings.getPostEndDifficultyBoost() >= 2.0 ? 1 : 0;
             entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 60 * 5, strengthAmplifier, true, false));
         }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Monster)) {
+            return;
+        }
+
+        LivingEntity damager = (LivingEntity) event.getDamager();
+        if (!isRegularScalableMob(damager)) {
+            return;
+        }
+
+        ProgressionManager progressionManager = WorldSettingsPlugin.getInstance().getProgressionManager();
+
+        double progressionScale;
+        if (event.getEntity() instanceof Player player) {
+            progressionScale = progressionManager.getProgressionScale(player);
+        } else {
+            progressionScale = progressionManager.getAverageProgressionScale(damager.getWorld());
+        }
+
+        event.setDamage(event.getDamage() * progressionScale);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -72,5 +108,28 @@ public class WorldSettingsGameplayListener implements Listener {
         if (settings.isBloodMoonEvents() && event.getEntityType() == EntityType.ZOMBIE) {
             event.getDrops().add(new ItemStack(Material.REDSTONE, 1));
         }
+    }
+
+    private static void scaleMobHealth(LivingEntity entity, double progressionScale) {
+        AttributeInstance maxHealth = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (maxHealth == null) {
+            return;
+        }
+
+        double oldMaxHealth = Math.max(1.0, maxHealth.getBaseValue());
+        double newMaxHealth = Math.max(1.0, oldMaxHealth * progressionScale);
+
+        maxHealth.setBaseValue(newMaxHealth);
+
+        if (entity.getHealth() > newMaxHealth) {
+            entity.setHealth(newMaxHealth);
+        }
+    }
+
+    private static boolean isRegularScalableMob(LivingEntity entity) {
+        EntityType type = entity.getType();
+
+        return type != EntityType.ENDER_DRAGON
+            && type != EntityType.WITHER;
     }
 }
